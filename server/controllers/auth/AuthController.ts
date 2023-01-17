@@ -43,7 +43,7 @@ export default class AuthController {
         res.status(403).json({ msg: "userName is incorrect or not exists" });
       }
     } catch (error) {
-      console.log({ msg: "error in login", error });
+      console.log("AuthController.login", error);
     }
   }
 

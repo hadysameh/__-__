@@ -2,13 +2,9 @@ import { VacationType } from "../../models";
 
 class GetCreateVacationOptions {
   static async getCreateVacationOptions() {
-    let vacationTypes = await VacationType.find().sort({
-      _id: "asc",
-    });
-    const createVacationOptions = {
-      vacationTypes,
-    };
-    return createVacationOptions;
+    const vacationsTypes = await VacationType.find({});
+    return vacationsTypes;
   }
 }
-export default GetCreateVacationOptions;
+
+export default GetCreateVacationOptions

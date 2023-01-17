@@ -15,6 +15,8 @@ export default class AuthRepo {
         });
         resolve(storedUser);
       } catch (error) {
+        console.log("AuthRepo.storeUser",error);
+
         reject(error);
       }
     });
@@ -23,9 +25,7 @@ export default class AuthRepo {
     return new Promise(async (resolve, reject) => {
       try {
         let user = await User.findOne({
-          where: {
-            userName: userName,
-          },
+          userName: userName,
         })
           .populate<IUserType>("userType")
           .populate<IOfficerModel>({
@@ -37,7 +37,8 @@ export default class AuthRepo {
           });
         resolve(user);
       } catch (error) {
-        console.log(error);
+        
+        console.log("AuthRepo.getUserByUserName",error);
         reject(error);
       }
     });

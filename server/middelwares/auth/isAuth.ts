@@ -16,9 +16,7 @@ export default async function isAuth(req: any, res: Response, next: any) {
     } else if (token) {
       var decoded = jwt.verify(token, privateKey);
       let user = await User.findOne({
-        where: {
-          id: decoded,
-        },
+        _id: decoded,
       })
         .populate<IUserType>("userType")
         .populate<IOfficerModel>({
@@ -32,7 +30,6 @@ export default async function isAuth(req: any, res: Response, next: any) {
           return null;
         });
       if (user) {
-        // console.log({ user: JSON.stringify(user) });
         req.user = user;
         next();
       } else {
@@ -41,12 +38,12 @@ export default async function isAuth(req: any, res: Response, next: any) {
         res.status(403).json({ msg: "unautherized" });
       }
     } else {
-      console.log("!token");
 
       res.status(403).json({ msg: "unautherized" });
     }
   } catch (error) {
-    console.log(error);
+
+    console.log("middleware isAuth",error);
   }
 
   // console.log(decoded.foo)

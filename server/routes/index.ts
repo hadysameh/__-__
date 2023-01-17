@@ -5,7 +5,8 @@ import { Express } from "express";
 // import { homeRouter } from "../features/home";
 import authRouter from "./authRoutes";
 import officersRouter from "./officersRoutes";
-import vacationsRouter from "./vacationRoutes";
+import vacationsCreditRouter from "./vacationsCreditRoutes";
+import vacationsRouter from "./vacationsRoutes";
 // console.log(routes)
 
 export let routesAssigner = (app: Express): void => {
@@ -15,4 +16,5 @@ export let routesAssigner = (app: Express): void => {
   app.use("/api/", authRouter);
   app.use("/api/", officersRouter);
   app.use("/api/", vacationsRouter);
+  app.use("/api/", vacationsCreditRouter);
 };

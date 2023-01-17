@@ -7,6 +7,7 @@ import UserType from "./UserType";
 import Vacation from "./Vacation";
 import VacationType from "./VacationType";
 import InOutTracking from "./InOutTracking";
+import VacationsCredit from "./VacationsCredit";
 
 export {
   Officer,
@@ -18,4 +19,5 @@ export {
   Vacation,
   VacationType,
   InOutTracking,
+  VacationsCredit
 };

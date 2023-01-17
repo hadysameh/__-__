@@ -11,9 +11,16 @@ const vacationSchema = new Schema<IVacationModel>({
     index: true,
   },
   // will come from input type date
-  from: { type: String, required: true },
+  from: { type: String, required: true, index: true },
   // will come from input type date
-  to: { type: String, required: true },
+  to: { type: String, required: true, index: true },
+  insteadOf: { type: String, required: false, index: true, default: null },
+  dayToHaveVactionInsteadOf: {
+    type: String,
+    required: false,
+    default: null,
+    index: true,
+  },
   officer: {
     type: Schema.Types.ObjectId,
     ref: "Officer",

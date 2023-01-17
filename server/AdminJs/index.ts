@@ -72,7 +72,12 @@ adminJs = new AdminJS({
         parent: userParent,
       },
     },
-
+    {
+      resource: models.VacationsCredit,
+      options: {
+        parent: userParent,
+      },
+    },
     {
       resource: models.InOutTracking,
       options: {

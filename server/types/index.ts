@@ -1,9 +1,12 @@
 import { Types } from "mongoose";
 export interface IOfficerModel {
   _id: any;
+  
+  id: any;
   name: string;
   rank: Types.ObjectId;
   height: string;
+  weight: string;
   dateOfBirth: string;
   address: string;
   branch: Types.ObjectId;
@@ -45,8 +48,9 @@ export interface IVacationModel {
   type: Types.ObjectId;
   from: string;
   to: string;
+  insteadOf?:string;
   officer: Types.ObjectId;
-
+  dayToHaveVactionInsteadOf: string;
   branchChiefApproved?: boolean;
   branchChiefNotice?: string | null;
 
@@ -60,14 +64,22 @@ export interface IVacationModel {
   ManagerNotice?: string | null;
 }
 
-export interface IVacationStatusModel {
-  vacation: Types.ObjectId;
-  //موافقة شئون ضباط
-  OfficersAffairsApproved: boolean;
-  viceManagerApproved: boolean;
-  ManagerApproved: boolean;
-  branchChiefApproved: boolean;
+export interface IVacationsCreditModel {
+  year:string;
+  officer: Types.ObjectId;
+  erguntVacationsNumber: number;
+  firstHalfyearlyVacationsDaysNumber: number;
+  secondHalfyearlyVacationsDaysNumber: number;
+  daysToHaveVactionsInsteadOf: { date: string }[];
 }
+// export interface IVacationStatusModel {
+//   vacation: Types.ObjectId;
+//   //موافقة شئون ضباط
+//   OfficersAffairsApproved: boolean;
+//   viceManagerApproved: boolean;
+//   ManagerApproved: boolean;
+//   branchChiefApproved: boolean;
+// }
 
 export interface IVacationTypeModel {
   vacationType: string;
@@ -85,4 +97,13 @@ export interface IErrandModel {
   out: Date;
   day: string;
   officer: Types.ObjectId;
+}
+
+export enum userTypesEnum {
+  admin = "admin",
+  manager = "manager",
+  viceManager = "viceManager",
+  officersAffairs = "officersAffairs",
+  branchChief = "branchChief",
+  normalOfficer = "normalOfficer",
 }

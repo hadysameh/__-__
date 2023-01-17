@@ -31,6 +31,9 @@ declare global {
         userName: string;
         password: string;
         officer: IOfficerModel;
+        userType: {
+          userType: string;
+        };
       };
     }
   }
@@ -45,7 +48,7 @@ global.io = io;
 app.use(adminJs.options.rootPath, router);
 app.use(bodyParser());
 app.use((req, res, next) => {
-  console.log("req to server");
+  console.log("req to server", { url: req.url });
   // console.log({ req });
   next();
 });
