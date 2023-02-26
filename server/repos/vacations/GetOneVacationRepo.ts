@@ -12,8 +12,7 @@ class GetOneVacationRepo {
           model: "Rank",
         },
       })
-      .populate<IVacationTypeModel>('type');
-
+      .populate<IVacationTypeModel>("type");
     return vacation;
   }
 }

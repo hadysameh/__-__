@@ -2,60 +2,32 @@ import { Request, Response } from "express";
 import StoreVacationRepo from "../../repos/vacations/StoreVacationRepo";
 import UpdateVacationRepo from "../../repos/vacations/UpdateVacationRepo";
 import DeleteVacationRepo from "../../repos/vacations/DeleteVacationRepo";
-import { IVacationModel } from "../../types";
+import { IOfficerModel, userTypesEnum } from "../../types";
+
 import GetCreateVacationOptions from "../../repos/vacations/GetCreateVacationOptions";
 import GetVacationsRepo from "../../repos/vacations/GetVacationsRepo";
 import GetOneVacationsCreditRepo from "../../repos/vacationsCredit/GetOneVacationsCreditRepo";
 import emitSocketEvent from "../../_helpers/socketIo";
+
+import getOfficersRepo from "../../repos/officers/getOfficersRepo";
+import GetOneVacationRepo from "../../repos/vacations/GetOneVacationRepo";
+import getOfficerType from "../../repos/_helpers/getOfficerType";
+import GetPendingVacationsToApproveCountRepo from "../../repos/vacations/GetPendingVacationsToApproveCount";
 class VacationsController {
+  static async getPendingVacationsToBeApprovedCount(
+    req: Request,
+    res: Response
+  ) {
+    try {
+      const count = await GetPendingVacationsToApproveCountRepo.getCount(
+        req.user
+      );
+      res.json(count);
+    } catch (error) {
+      console.log({ error });
+    }
+  }
   static async getVacationSearchOptions(req: Request, res: Response) {}
-
-  // static async getMyVacations(req: Request, res: Response) {
-  //   try {
-  //     const officerId = req.user.officer._id;
-  //     const { pageNumber, rowsPerPage } = req.query;
-
-  //     const myvacations = await GetMyVacationsRepo.getMyVacations(
-  //       officerId,
-  //       pageNumber,
-  //       rowsPerPage
-  //     );
-  //     res.json(myvacations);
-  //   } catch (error) {
-  //     console.log({ error });
-  //   }
-  // }
-
-  // static async getMyVacationsRequests(req: Request, res: Response) {
-  //   //varys depending on user type
-  //   try {
-  //     const officerId = req.user.officer._id;
-  //     const { pageNumber, rowsPerPage } = req.query;
-
-  //     const myvacations = await GetMyVacationsRequetsRepo.getMyVacationsRequestsRepo(
-  //       officerId,
-  //       pageNumber,
-  //       rowsPerPage
-  //     );
-  //     res.json(myvacations);
-  //   } catch (error) {
-  //     console.log({ error });
-  //   }
-  // }
-
-  // static async getPendingVacations(req: Request, res: Response) {
-  //   try {
-  //     const { pageNumber, rowsPerPage } = req.query;
-  //     const pendingVacations = await GetPendingVacationsRepo.getPendingVacations(
-  //       req.user.userType.userType,
-  //       pageNumber,
-  //       rowsPerPage
-  //     );
-  //     res.json(pendingVacations);
-  //   } catch (error) {
-  //     console.log({ error });
-  //   }
-  // }
 
   static async getCreateVacationOptions(req: Request, res: Response) {
     try {
@@ -67,31 +39,44 @@ class VacationsController {
   }
 
   static async get(req: Request, res: Response) {
-    const { vacationModelParams, pageNumber, rowsPerPage } = req.query;
+    let { vacationModelParams, pageNumber, rowsPerPage } = req.query;
+    const userType = req.user.userType.userType;
+    const userBranch = req.user.officer.branch;
+
+    let modifiedParams = JSON.parse(String(vacationModelParams));
+
+    if (userType == userTypesEnum.branchChief) {
+      const brachOfficers = await getOfficersRepo.getOfficers({
+        branch: userBranch,
+      });
+      const brachOfficersId = brachOfficers.map(
+        (brachOfficer) => brachOfficer.id
+      );
+      if (!modifiedParams["officer"]) {
+        modifiedParams["officer"] = { $in: brachOfficersId };
+      }
+    }
+
     const vacations = await GetVacationsRepo.getVacations(
-      vacationModelParams,
+      modifiedParams,
       pageNumber,
-      rowsPerPage
+      rowsPerPage,
+      req.user.userType.userType === userTypesEnum.manager
     );
     res.json(vacations);
   }
 
   static async getOne(req: Request, res: Response) {
     const { id } = req.query;
-    const vacationCredit = GetOneVacationsCreditRepo.getVacationCredit(id);
-    res.json(vacationCredit);
+    const vacation = await GetOneVacationRepo.getVacation(id);
+    const officerType = await getOfficerType(vacation?.get("officer"));
+    res.json({ vacation, officerType });
   }
 
   static async store(req: Request, res: Response) {
     req.body;
     try {
-      let vacationParams = {
-        type: req.body.type,
-        to: req.body.to,
-        from: req.body.from,
-        officer: req.user.officer.id,
-        insteadOf: req.body.insteadOf,
-      };
+      let vacationParams = req.body;
 
       let vacations = await StoreVacationRepo.storeVacation(vacationParams);
       emitSocketEvent("refetch-vacations-data");
@@ -105,14 +90,18 @@ class VacationsController {
   static async update(req: Request, res: Response) {
     try {
       let vacationParams = req.body;
+      const { _id } = vacationParams;
+      delete vacationParams["_id"];
+      console.log({ vacationParams });
+
       let updatedVacation = await UpdateVacationRepo.updateVacation(
-        vacationParams.id,
+        _id,
         vacationParams
       );
       emitSocketEvent("refetch-vacations-data");
       res.json(updatedVacation);
     } catch (error) {
-      console.log({ error });
+      console.log("vacationsController update", { error });
     }
   }
 

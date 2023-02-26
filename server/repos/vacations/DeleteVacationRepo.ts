@@ -3,7 +3,7 @@ import { Vacation } from "../../models";
 
 class DeleteVacationRepo {
   static async deleteVacation(id: any) {
-    let deletedVacation = Vacation.deleteOne({ id });
+    let deletedVacation = Vacation.deleteOne({ _id: id });
     return deletedVacation;
   }
 }

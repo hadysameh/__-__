@@ -11,7 +11,6 @@ class StoreVacationRepo {
     insteadOf?: string;
   }) {
     const cleanedParams = clearObjectFromUndefinedParams(params);
-    console.log({ cleanedParams, params });
     let vacation = await Vacation.create(cleanedParams);
     return vacation;
   }

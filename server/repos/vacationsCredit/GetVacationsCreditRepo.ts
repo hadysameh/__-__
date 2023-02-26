@@ -5,8 +5,8 @@ import getCurrentYear from "../../_helpers/getCurrentYear";
 class GetVacationsCreditRepo {
   static async getVacationsCredit(
     queryParamsObj: any = {},
-    pageNumber: any,
-    rowsPerPage: any
+    pageNumber: any = 1,
+    rowsPerPage: any = 2000
   ) {
     pageNumber = pageNumber - 1;
     if (typeof queryParamsObj == "string") {

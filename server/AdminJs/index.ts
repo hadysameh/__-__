@@ -61,6 +61,18 @@ adminJs = new AdminJS({
       },
     },
     {
+      resource: models.ErrandType,
+      options: {
+        parent: userParent,
+      },
+    },
+    {
+      resource: models.Errand,
+      options: {
+        parent: userParent,
+      },
+    },
+    {
       resource: models.Vacation,
       options: {
         parent: userParent,
@@ -90,19 +102,13 @@ adminJs = new AdminJS({
 router = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
   authenticate: async (email, password) => {
     const user = await models.User.findOne({
-      where: [
-        {
-          userName: email,
-        },
-      ],
+      userName: email,
     }).populate<{ userType: IUserType }>("userType");
+    console.log({ email, user });
     if (user) {
-      if (user.userType.userType == "admin") {
-        const matched = await bcrypt.compare(password, user.password);
-        console.log({ matched });
-        if (matched) {
-          return user;
-        }
+      const isAdmin = user.userType.userType == "admin";
+      if (isAdmin) {
+        return user;
       }
     }
 

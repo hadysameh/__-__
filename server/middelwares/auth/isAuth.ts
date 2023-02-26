@@ -29,6 +29,7 @@ export default async function isAuth(req: any, res: Response, next: any) {
         .catch(() => {
           return null;
         });
+         
       if (user) {
         req.user = user;
         next();

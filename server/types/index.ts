@@ -1,7 +1,7 @@
-import { Types } from "mongoose";
+import { Model, Types } from "mongoose";
 export interface IOfficerModel {
   _id: any;
-  
+
   id: any;
   name: string;
   rank: Types.ObjectId;
@@ -45,31 +45,36 @@ export interface IBranchModel {
 }
 
 export interface IVacationModel {
+  id?: string;
   type: Types.ObjectId;
   from: string;
   to: string;
-  insteadOf?:string;
+  insteadOf?: string;
   officer: Types.ObjectId;
   dayToHaveVactionInsteadOf: string;
   branchChiefApproved?: boolean;
   branchChiefNotice?: string | null;
 
-  OfficersAffairsApproved?: boolean;
-  OfficersAffairsNotice?: string | null;
+  officersAffairsApproved?: boolean;
+  officersAffairsNotice?: string | null;
 
   viceManagerApproved?: boolean;
   viceManagerNotice?: string | null;
 
-  ManagerApproved?: boolean;
-  ManagerNotice?: string | null;
+  managerApproved?: boolean;
+  managerNotice?: string | null;
 }
 
 export interface IVacationsCreditModel {
-  year:string;
+  id: string;
+  year: string;
   officer: Types.ObjectId;
   erguntVacationsNumber: number;
+  remainingErguntVacationsNumber: number;
   firstHalfyearlyVacationsDaysNumber: number;
+  remainingFirstHalfyearlyVacationsDaysNumber: number;
   secondHalfyearlyVacationsDaysNumber: number;
+  remainingSecondHalfyearlyVacationsDaysNumber: number;
   daysToHaveVactionsInsteadOf: { date: string }[];
 }
 // export interface IVacationStatusModel {
@@ -82,6 +87,8 @@ export interface IVacationsCreditModel {
 // }
 
 export interface IVacationTypeModel {
+  id: string;
+  _id: string;
   vacationType: string;
 }
 
@@ -93,12 +100,34 @@ export interface IInOutTrackingModel {
 }
 
 export interface IErrandModel {
-  in: Date;
-  out: Date;
-  day: string;
+  sequenceNumber: any;
+  fromDate: string;
+  toDate: string;
   officer: Types.ObjectId;
+  destination: string;
+  reason: string;
+  report: string;
+  errandType: Types.ObjectId;
+  branchChiefApproved?: boolean;
+  branchChiefNotice?: string | null;
+
+  officersAffairsApproved?: boolean;
+  officersAffairsNotice?: string | null;
+
+  viceManagerApproved?: boolean;
+  viceManagerNotice?: string | null;
 }
 
+export interface IErrandTypeModel {
+  id: string;
+  _id: string;
+  errandType: string;
+}
+
+export enum ErrandtypesEnum {
+  outsideErrand = "outsideErrand",
+  hospitalErrand = "hospitalErrand",
+}
 export enum userTypesEnum {
   admin = "admin",
   manager = "manager",
@@ -106,4 +135,11 @@ export enum userTypesEnum {
   officersAffairs = "officersAffairs",
   branchChief = "branchChief",
   normalOfficer = "normalOfficer",
+}
+
+export enum vacationsTypesEnumInArabic {
+  ergunt = "عارضة",
+  yearly = "سنوية",
+  emergencyCasual = "عارضة  طارئة",
+  insteadOfVacation = "بدل راحة",
 }

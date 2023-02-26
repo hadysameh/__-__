@@ -1,17 +1,24 @@
 import { Request, Response } from "express";
 import { Vacation } from "../../models";
 import { IOfficerModel, IVacationModel, IVacationTypeModel } from "../../types";
+import getNormalOfficersIds from "../_helpers/getNormalOfficersIds";
 
 class GetVacationsRepo {
   static async getVacations(
-    queryParams: any,
-    pageNumber: any,
-    rowsPerPage: any
+    queryParams: any = {},
+    pageNumber: any = 1,
+    rowsPerPage: any = 2000,
+    isRequestingUserOfManagerType: boolean = false
   ) {
     if (typeof queryParams == "string") {
       queryParams = JSON.parse(queryParams);
     }
     pageNumber = pageNumber - 1;
+    let normalOfficersIds: any = [];
+    if (isRequestingUserOfManagerType) {
+      normalOfficersIds = await getNormalOfficersIds();
+      queryParams["officer"] = { $nin: normalOfficersIds };
+    }
     let vacations = await Vacation.find(queryParams ? queryParams : {})
       .limit(Number(rowsPerPage))
       .skip(Number(pageNumber) * Number(rowsPerPage))
@@ -23,10 +30,9 @@ class GetVacationsRepo {
         },
       })
       .sort({
-        _id: "asc",
+        _id: "desc",
       })
       .populate<IVacationTypeModel>("type");
-    console.log({ vacations });
     return vacations;
   }
 }

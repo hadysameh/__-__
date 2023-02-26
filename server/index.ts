@@ -2,7 +2,6 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { routesAssigner } from "./routes/index";
-
 import bodyParser from "body-parser";
 import path from "path";
 import cookieParser from "cookie-parser";
@@ -11,6 +10,7 @@ import { router, adminJs } from "./AdminJs";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import { IOfficerModel } from "./types";
+
 require("dotenv").config();
 
 const app: Express = express();

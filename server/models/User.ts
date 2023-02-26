@@ -13,13 +13,11 @@ const userSchema = new Schema<IUserModel>({
     type: Schema.Types.ObjectId,
     ref: "UserType",
     index: true,
-
   },
   officer: {
     type: Schema.Types.ObjectId,
     ref: "Officer",
     index: true,
-
   },
 });
 
@@ -39,6 +37,33 @@ userSchema.pre("save", function (next) {
         }
         user.password = hash;
         // console.log(user)
+        next();
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  });
+});
+
+userSchema.pre("findOneAndUpdate", function (next) {
+  const user = this;
+  const saltRounds = 10;
+  bcrypt.genSalt(saltRounds, (err, salt) => {
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
+    try {
+      const userUpdate = user.getUpdate();
+      //@ts-ignore
+      const { $set } = userUpdate;
+
+      bcrypt.hash($set.password, salt, (err, hash) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        $set.password = hash;
         next();
       });
     } catch (e) {

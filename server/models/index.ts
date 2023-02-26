@@ -8,7 +8,8 @@ import Vacation from "./Vacation";
 import VacationType from "./VacationType";
 import InOutTracking from "./InOutTracking";
 import VacationsCredit from "./VacationsCredit";
-
+import ErrandType from "./ErrandType";
+import Errand from "./Errand";
 export {
   Officer,
   Rank,
@@ -19,5 +20,7 @@ export {
   Vacation,
   VacationType,
   InOutTracking,
-  VacationsCredit
+  VacationsCredit,
+  ErrandType,
+  Errand,
 };

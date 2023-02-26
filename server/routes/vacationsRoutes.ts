@@ -34,10 +34,14 @@ vacationsRouter.get(
 //   isAuth,
 //   VacationsController.getPendingVacations
 // );
-
+vacationsRouter.get(
+  "/errand/getvacationstobeapprovedcount",
+  isAuth,
+  VacationsController.getPendingVacationsToBeApprovedCount
+);
 vacationsRouter.get("/vacation", isAuth, VacationsController.get);
 
-vacationsRouter.get("/vacation/getone", isAuth, VacationsController.getOne); 
+vacationsRouter.get("/vacation/getone", isAuth, VacationsController.getOne);
 
 vacationsRouter.post("/vacation/store", isAuth, VacationsController.store);
 
