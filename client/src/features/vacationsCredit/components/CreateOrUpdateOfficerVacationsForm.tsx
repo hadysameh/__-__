@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import HorizontalSpinner from "../../../components/HorizontalSpinner";
 import Select from "react-select";
-import fetchOfficers from "../../officers/serverServices/fetchOfficers";
+import get from "../../officers/serverServices/get";
 import storeOrUpdateVacationsCredit from "../serverServices/storeOrUpdateVacationsCredit";
 import getCurrentYear from "../../../_helpers/getCurrentYear";
 import fetchOfficerVacationsCreditInYear from "../serverServices/fetchOfficerVacationsCreditInYear";
@@ -42,7 +42,7 @@ function CreatOrUpdateOfficerVacationsForm() {
     data: officersData,
     isLoading: isOfficersDataLoading,
     error: fetchingOfficersError,
-  } = useQuery("fetchOfficers", fetchOfficers, {
+  } = useQuery("fetchOfficers", get, {
     staleTime: Infinity,
     cacheTime: 0,
   });
@@ -157,66 +157,136 @@ function CreatOrUpdateOfficerVacationsForm() {
                 ) : (
                   <>
                     <div className="mb-3">
-                      <div className="col-5">
-                        <label className="form-label">
-                          رصيد الاجازات السنوية في النصف الاول
-                        </label>
-                        <input
-                          type="number"
-                          max={15}
-                          min={0}
-                          value={
-                            officerVacationsCreditData[0]
-                              ?.firstHalfyearlyVacationsDaysNumber
-                          }
-                          className="form-control fs-4"
-                          onChange={(e) => {
-                            setFirstyearlyVacationsDaysNumber(
-                              Number(e.target.value)
-                            );
-                          }}
-                        />
+                      <div className="row">
+                        <div className="col-5">
+                          <label className="form-label">
+                            رصيد الأجازات الأساسي من العارضة
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control fs-4"
+                            defaultValue={
+                              officerVacationsCreditData[0]
+                                ?.erguntVacationsNumber
+                            }
+                            onChange={(e) => {
+                              setErguntVacationsNumber(Number(e.target.value));
+                            }}
+                          />
+                        </div>
+                        <div className="col-5">
+                          <label className="form-label">
+                            رصيد الأجازات المتبقي من العارضة
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control fs-4"
+                            defaultValue={
+                              officerVacationsCreditData[0]
+                                ?.remainingErguntVacationsNumber ||
+                              officerVacationsCreditData[0]
+                                ?.erguntVacationsNumber
+                            }
+                            onChange={(e) => {
+                              setErguntVacationsNumber(Number(e.target.value));
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="mb-3">
-                      <div className="col-5">
-                        <label className="form-label">
-                          رصيد الاجازات السنوية في النصف الثاني
-                        </label>
-                        <input
-                          type="number"
-                          max={15}
-                          min={0}
-                          value={
-                            officerVacationsCreditData[0]
-                              ?.secondHalfyearlyVacationsDaysNumber
-                          }
-                          className="form-control fs-4"
-                          onChange={(e) => {
-                            setSecondyearlyVacationsDaysNumber(
-                              Number(e.target.value)
-                            );
-                          }}
-                        />
+                      <div className="row">
+                        <div className="col-5">
+                          <label className="form-label">
+                            رصيد الاجازات السنوية الاساسي في النصف الاول
+                          </label>
+                          <input
+                            type="number"
+                            max={15}
+                            min={0}
+                            defaultValue={
+                              officerVacationsCreditData[0]
+                                ?.firstHalfyearlyVacationsDaysNumber
+                            }
+                            className="form-control fs-4"
+                            onChange={(e) => {
+                              setFirstyearlyVacationsDaysNumber(
+                                Number(e.target.value)
+                              );
+                            }}
+                          />
+                        </div>
+                        <div className="col-5">
+                          <label className="form-label">
+                            رصيد الاجازات السنوية المتبقي في النصف الاول
+                          </label>
+                          <input
+                            type="number"
+                            max={15}
+                            min={0}
+                            defaultValue={
+                              officerVacationsCreditData[0]
+                                ?.remainingFirstHalfyearlyVacationsDaysNumber ||
+                              officerVacationsCreditData[0]
+                                ?.firstHalfyearlyVacationsDaysNumber
+                            }
+                            className="form-control fs-4"
+                            onChange={(e) => {
+                              setFirstyearlyVacationsDaysNumber(
+                                Number(e.target.value)
+                              );
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="mb-3">
-                      <div className="col-5">
-                        <label className="form-label">
-                          رصيد الأجازات من العارضة
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control fs-4"
-                          value={
-                            officerVacationsCreditData[0]?.erguntVacationsNumber
-                          }
-                          onChange={(e) => {
-                            setErguntVacationsNumber(Number(e.target.value));
-                          }}
-                        />
+                      <div className="row">
+                        <div className="col-5">
+                          <label className="form-label">
+                            رصيد الاجازات السنويةالاساسي في النصف الثاني
+                          </label>
+                          <input
+                            type="number"
+                            max={15}
+                            min={0}
+                            defaultValue={
+                              officerVacationsCreditData[0]
+                                ?.secondHalfyearlyVacationsDaysNumber
+                            }
+                            className="form-control fs-4"
+                            onChange={(e) => {
+                              setSecondyearlyVacationsDaysNumber(
+                                Number(e.target.value)
+                              );
+                            }}
+                          />
+                        </div>
+                        <div className="col-5">
+                          <label className="form-label">
+                            رصيد الاجازات السنوية المتبقي في النصف الثاني
+                          </label>
+                          <input
+                            type="number"
+                            max={15}
+                            min={0}
+                            defaultValue={
+                              officerVacationsCreditData[0]
+                                ?.remainingSecondHalfyearlyVacationsDaysNumber ||
+                              officerVacationsCreditData[0]
+                                ?.secondHalfyearlyVacationsDaysNumber
+                            }
+                            className="form-control fs-4"
+                            onChange={(e) => {
+                              setSecondyearlyVacationsDaysNumber(
+                                Number(e.target.value)
+                              );
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
+
                     <div className="mb-3">
                       <label className="form-label"> ايام تستحق بدل راحة</label>
 

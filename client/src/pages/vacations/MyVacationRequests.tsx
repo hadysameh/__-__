@@ -4,7 +4,11 @@ import getVacations from "../../features/vacations/serverApis/get";
 import { useQuery } from "react-query";
 import HorizontalSpinner from "../../components/HorizontalSpinner";
 import socket from "../../services/socket-io";
+import { useSelector } from "react-redux";
+import { selectOfficerId } from "../../features/auth";
 function MyVacationRequests() {
+  const logedOfficerId = useSelector(selectOfficerId);
+
   const [rowsPerPage, setRowsPerPage] = useState("20");
   const [pageNumber, setpageNumber] = useState<any>("1");
   const {
@@ -12,8 +16,20 @@ function MyVacationRequests() {
     isLoading: isVacationsLoading,
     error,
     refetch,
-  } = useQuery(["fetchMyVacationsRequests", rowsPerPage, pageNumber], () =>
-    getVacations({}, pageNumber, rowsPerPage)
+  } = useQuery(
+    ["fetchMyVacationsRequests", rowsPerPage, pageNumber],
+    () =>
+      getVacations(
+        {
+          officer: logedOfficerId,
+        },
+        pageNumber,
+        rowsPerPage
+      ),
+    {
+      staleTime: Infinity,
+      cacheTime: 0,
+    }
   );
   useEffect(() => {
     socket.on("refetch-vacations-data", refetch);
@@ -45,9 +61,9 @@ function MyVacationRequests() {
           to: vacation.to,
           insteadOf: vacation.insteadOf,
           branchChiefApproved: vacation.branchChiefApproved,
-          OfficersAffairsApproved: vacation.OfficersAffairsApproved,
-          viceManagerApproved: vacation.ManagerApproved,
-          ManagerApproved: vacation.ManagerApproved,
+          officersAffairsApproved: vacation.officersAffairsApproved,
+          viceManagerApproved: vacation.viceManagerApproved,
+          managerApproved: vacation.managerApproved,
         }))}
       />
       <nav aria-label="Page navigation example" className="fs-4">

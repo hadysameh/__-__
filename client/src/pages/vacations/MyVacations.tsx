@@ -4,29 +4,46 @@ import { useQuery } from "react-query";
 
 import HorizontalSpinner from "../../components/HorizontalSpinner";
 import getVacations from "../../features/vacations/serverApis/get";
-import { selectOfficerId } from "../../features/auth";
+import { selectOfficerId, selectUserType } from "../../features/auth";
 import { useSelector } from "react-redux";
 import PagePagination from "../../components/PagePagination";
+import socket from "../../services/socket-io";
+import { userTypesEnum } from "../../types";
 
 function MyVacations() {
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [pageNumber, setPageNumber] = useState(1);
   const logedOfficerId = useSelector(selectOfficerId);
+  const userType = useSelector(selectUserType);
 
-  const { data: vacations, isLoading: isVacationsLoading, error } = useQuery(
-    ["fetchMyVacationsRequests", rowsPerPage, pageNumber],
-    () =>
-      getVacations(
-        {
-          officer: logedOfficerId,
-          viceManagerApproved: true,
-          OfficersAffairsApproved:true,
-          branchChiefApproved:true
-        },
-        pageNumber,
-        rowsPerPage
-      )
+  const {
+    data: vacations,
+    isLoading: isVacationsLoading,
+    error,
+    refetch,
+  } = useQuery(
+    ["fetchMyVacations", rowsPerPage, pageNumber],
+    () => {
+      const vacationsQuery: any = {
+        officer: logedOfficerId,
+        viceManagerApproved: true,
+      };
+      if (userType !== userTypesEnum.normalOfficer) {
+        vacationsQuery["managerApproved"] = true;
+      }
+      return getVacations(vacationsQuery, pageNumber, rowsPerPage);
+    },
+    {
+      staleTime: Infinity,
+      cacheTime: 0,
+    }
   );
+  useEffect(() => {
+    socket.on("refetch-vacations-data", refetch);
+    return () => {
+      socket.off("refetch-vacations-data", refetch);
+    };
+  }, []);
   if (isVacationsLoading)
     return (
       <>
@@ -50,9 +67,9 @@ function MyVacations() {
           to: vacation.to,
           insteadOf: vacation.insteadOf,
           branchChiefApproved: vacation.branchChiefApproved,
-          OfficersAffairsApproved: vacation.OfficersAffairsApproved,
-          viceManagerApproved: vacation.ManagerApproved,
-          ManagerApproved: vacation.ManagerApproved,
+          officersAffairsApproved: vacation.officersAffairsApproved,
+          viceManagerApproved: vacation.viceManagerApproved,
+          managerApproved: vacation.managerApproved,
         }))}
       />
       <PagePagination

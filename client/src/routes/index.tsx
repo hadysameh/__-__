@@ -11,6 +11,7 @@ import HorizontalSpinner from "../components/HorizontalSpinner";
 import Home from "../pages/home/Home";
 import vacationsRoutes from "./vacationsRoutes";
 import vacationsCreditRoutes from "./vacationsCreditRoutes";
+import errandsRoutes from "./errandsRoutes";
 
 const ForeOtherRoutes = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ let routes = (
           {shiftsRoutes}
           {vacationsRoutes}
           {vacationsCreditRoutes}
+          {errandsRoutes}
           <Route
             path="/*"
             element={

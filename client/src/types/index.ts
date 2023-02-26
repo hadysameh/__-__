@@ -21,25 +21,37 @@ export enum vacationsTypesEnumInArabic {
   insteadOfVacation = "بدل راحة",
 }
 
+export interface IOfficerModel {
+  _id?: any;
+  id?: any;
+  name?: string;
+  rank?: string;
+  height?: string;
+  weight?: string;
+  dateOfBirth?: string;
+  address?: string;
+  branch?: string;
+}
+
 export interface IVacationModelParams {
   type?: any;
-  from?: string;
-  to?: string;
+  from?: any;
+  to?: any;
   insteadOf?: string;
   officer?: any;
   dayToHaveVactionInsteadOf?: string;
-  
+
   branchChiefApproved?: boolean | null;
   branchChiefNotice?: string | null;
 
-  OfficersAffairsApproved?: boolean | null;
-  OfficersAffairsNotice?: string | null;
+  officersAffairsApproved?: boolean | null;
+  officersAffairsNotice?: string | null;
 
   viceManagerApproved?: boolean | null;
   viceManagerNotice?: string | null;
 
-  ManagerApproved?: boolean | null;
-  ManagerNotice?: string | null;
+  managerApproved?: boolean | null;
+  managerNotice?: string | null;
 }
 
 export interface IVacationsCreditModelParams {

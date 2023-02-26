@@ -4,7 +4,7 @@ import HorizontalSpinner from "../../components/HorizontalSpinner";
 import { selectOfficerId } from "../../features/auth";
 import fetchOfficerVacationsCreditInYear from "../../features/vacationsCredit/serverServices/fetchOfficerVacationsCreditInYear";
 import getCurrentYear from "../../_helpers/getCurrentYear";
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import socket from "../../services/socket-io";
 function MyVacationsCredit() {
   const loggedOfficerId = useSelector(selectOfficerId);
@@ -13,7 +13,7 @@ function MyVacationsCredit() {
     data: vacationsCredit,
     isLoading: isVacationsCreditLoading,
     error: vacationsCreditError,
-    refetch
+    refetch,
   } = useQuery(
     ["getOfficerVactionsCredit", vacationsYear],
     () => fetchOfficerVacationsCreditInYear(loggedOfficerId, vacationsYear),
@@ -50,21 +50,46 @@ function MyVacationsCredit() {
         <HorizontalSpinner />
       ) : (
         <div className="fs-3">
-          <div>
-            الرصيد المتبقي من العارضة:{" "}
-            {vacationsCredit[0]?.erguntVacationsNumber ||
-              unavailableDataElement}
+          <div className="row">
+            <div className="col-xl-3 col-lg-6">
+              الرصيد الاساسي من العارضة:{" "}
+              {vacationsCredit[0]?.erguntVacationsNumber ||
+                unavailableDataElement}
+            </div>
+            <div className="col-xl-3 col-lg-6">
+              الرصيد المتبقي من العارضة:{" "}
+              {vacationsCredit[0]?.remainingErguntVacationsNumber ||
+                vacationsCredit[0]?.erguntVacationsNumber}
+            </div>
           </div>
-          <div>
-            الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-            {vacationsCredit[0]?.firstHalfyearlyVacationsDaysNumber ||
-              unavailableDataElement}
+          <br />
+          <div className="row">
+            <div className="col-xl-3 col-lg-6">
+              الرصيد الاساسي من الاجازات السنوية في النصف الأول:{" "}
+              {vacationsCredit[0]?.firstHalfyearlyVacationsDaysNumber ||
+                unavailableDataElement}
+            </div>
+            <div className="col-xl-3 col-lg-6">
+              الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
+              {vacationsCredit[0]
+                ?.remainingFirstHalfyearlyVacationsDaysNumber ||
+                vacationsCredit[0]?.firstHalfyearlyVacationsDaysNumber}
+            </div>
           </div>
-          <div>
-            الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-            {vacationsCredit[0]?.secondHalfyearlyVacationsDaysNumber ||
-              unavailableDataElement}
+          <br />
+          <div className="row">
+            <div className="col-xl-3 col-lg-6">
+              الرصيد الاساسي من الاجازات السنوية في النصف الثاني:{" "}
+              {vacationsCredit[0]?.secondHalfyearlyVacationsDaysNumber ||
+                unavailableDataElement}
+            </div>
+            <div className="col-xl-3 col-lg-6">
+              الرصيد المتبقي من الاجازات السنوية في النصف الثاني:{" "}
+              {vacationsCredit[0]?.secondHalfyearlyVacationsDaysNumber ||
+                unavailableDataElement}
+            </div>
           </div>
+          <br />
           <div>
             ايام تستحق بدل راحة:{" "}
             {vacationsCredit[0]?.daysToHaveVactionsInsteadOf.length ||

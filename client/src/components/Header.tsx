@@ -10,14 +10,60 @@ import {
 // import { socketIoEvent } from "../types";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
+import { useQuery } from "react-query";
+import getPendeingVacationsCout from "../features/vacations/serverApis/getPendeingVacationsCout";
+import getPendeingErrandsCout from "../features/errands/serverApis/getPendeingErrandsCout";
+import socket from "../services/socket-io";
+import { userTypesEnum } from "../types";
 function Header() {
   const token = useSelector(selectToken);
   const officerName = useSelector(selectOfficerName);
   const userType = useSelector(selectUserType);
   const officerRank = useSelector(selectOfficerRank);
   const audioRef = useRef<any>();
+  const {
+    data: pendingVacationsCount,
+    isLoading: isPendingVacationsCountLoading,
+    error: pendingVacationsCountError,
+    refetch: refetchPendingVacationsCount,
+  } = useQuery(
+    ["fetchVacationsCount"],
+    () => {
+      return getPendeingVacationsCout();
+    },
+    {
+      staleTime: Infinity,
+      cacheTime: 0,
+    }
+  );
+
+  const {
+    data: pendingErrandsCount,
+    isLoading: isPendingErrandsCountLoading,
+    error: pendingErrandsCountError,
+    refetch: refetchPendingErrandsCount,
+  } = useQuery(
+    ["fetchErrandsCount"],
+    () => {
+      return getPendeingErrandsCout();
+    },
+    {
+      staleTime: Infinity,
+      cacheTime: 0,
+    }
+  );
   useEffect(() => {
-    console.log({ userType });
+    socket.on("refetch-vacations-data", refetchPendingVacationsCount);
+    return () => {
+      socket.off("refetch-vacations-data", refetchPendingVacationsCount);
+    };
+  });
+
+  useEffect(() => {
+    socket.on("refetch-errands-data", refetchPendingErrandsCount);
+    return () => {
+      socket.off("refetch-errands-data", refetchPendingErrandsCount);
+    };
   });
   return (
     <>
@@ -69,16 +115,18 @@ function Header() {
                     aria-expanded="false"
                   >
                     الأجازات
+                    {userType !== userTypesEnum.normalOfficer ? (
+                      <span className="bg-danger">{pendingVacationsCount}</span>
+                    ) : (
+                      <></>
+                    )}
                   </a>
                   <ul
                     className="dropdown-menu fs-3"
                     aria-labelledby="navbarDropdownMenuLink"
                   >
                     <li className="nav-item">
-                      <Link
-                        to="/vacations/"
-                        className="nav-link active "
-                      >
+                      <Link to="/vacations/" className="nav-link active ">
                         صفحة الاجازات
                       </Link>
                     </li>
@@ -107,13 +155,89 @@ function Header() {
                     {userType !== "normalOfficer" && (
                       <li className="nav-item">
                         <Link
-                          to="/vacations/pendingvacations"
+                          to="/vacations/pendingvacationstoapprove"
                           className="nav-link active "
                         >
                           طلبات اجازة تنتظر الموافقة
+                          {userType !== userTypesEnum.normalOfficer ? (
+                            <span className="bg-danger">
+                              {pendingVacationsCount}
+                            </span>
+                          ) : (
+                            <></>
+                          )}
                         </Link>
                       </li>
                     )}
+                  </ul>
+                </li>
+
+                <li className="nav-item dropdown text-right ">
+                  <a
+                    className="nav-link dropdown-toggle text-white"
+                    href="#"
+                    id="navbarDropdownMenuLink"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    المأموريات
+                    {userType !== userTypesEnum.normalOfficer &&
+                    userType !== userTypesEnum.manager ? (
+                      <span className="bg-danger">{pendingErrandsCount}</span>
+                    ) : (
+                      <></>
+                    )}
+                  </a>
+                  <ul
+                    className="dropdown-menu fs-3"
+                    aria-labelledby="navbarDropdownMenuLink"
+                  >
+                    <li className="nav-item">
+                      <Link to="/errands/" className="nav-link active ">
+                        صفحة المأموريات
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/errands/myerrands"
+                        className="nav-link active "
+                      >
+                        المأموريات الموافق عليها
+                      </Link>
+                    </li>
+
+                    <li className="nav-item">
+                      <Link
+                        to="/errands/myerrandsrequests"
+                        className="nav-link active "
+                      >
+                        طلبات المأموريات الخاصة بي
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/errands/create" className="nav-link active ">
+                        انشاء طلب مأمورية
+                      </Link>
+                    </li>
+                    {userType !== userTypesEnum.normalOfficer &&
+                      userType !== userTypesEnum.manager && (
+                        <li className="nav-item">
+                          <Link
+                            to="/errands/pendingerrandstoapprove"
+                            className="nav-link active "
+                          >
+                            طلبات مأمورية تنتظر الموافقة
+                            {userType !== userTypesEnum.normalOfficer ? (
+                              <span className="bg-danger">
+                                {pendingErrandsCount}
+                              </span>
+                            ) : (
+                              <></>
+                            )}
+                          </Link>
+                        </li>
+                      )}
                   </ul>
                 </li>
               </>

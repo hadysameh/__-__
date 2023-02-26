@@ -1,7 +1,7 @@
 import RedirectIfNotAuth from "../middlewares/routesMiddlewares/RedirectIfNotAuth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VacationsHome from "../pages/vacations/VacationsHome";
-import CreateVacation from "../pages/vacations/CreateVacation";
+import CreateVacationRequest from "../pages/vacations/CreateVacationRequest";
 import MyVacationRequests from "../pages/vacations/MyVacationRequests";
 import MyVacations from "../pages/vacations/MyVacations";
 import PendingVacationsRequests from "../pages/vacations/PendingVacationsRequests";

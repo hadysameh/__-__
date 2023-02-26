@@ -2,44 +2,145 @@ import { useSelector } from "react-redux";
 import { userTypes } from "../../../types";
 import { selectUserType } from "../../auth";
 import ApprovalBlock from "./ApprovalBlock";
+import { useEffect } from "react";
+import socket from "../../../services/socket-io";
+import getOneVacation from "../serverApis/getOne";
+import { useQuery } from "react-query";
+import HorizontalSpinner from "../../../components/HorizontalSpinner";
+import fetchOfficerVacationsCreditInYear from "../../vacationsCredit/serverServices/fetchOfficerVacationsCreditInYear";
+import getCurrentYear from "../../../_helpers/getCurrentYear";
+import OfficerRemainingVacationsCredit from "../../vacationsCredit/components/OfficerRemainingVacationsCredit";
+interface IProps {
+  vacationId: string;
+}
 
-function VacationApprovalOverlayContent() {
+function VacationApprovalOverlayContent(props: IProps) {
   const userType = useSelector(selectUserType);
+  const {
+    data: storedVacationData,
+    isLoading: isVacationsLoading,
+    error: vacationError,
+    refetch: refetchVacations,
+  } = useQuery("getOneVacation", () => getOneVacation(props.vacationId), {
+    staleTime: Infinity,
+    cacheTime: 0,
+    enabled: !!props.vacationId,
+  });
+  const {
+    data: officerVacationCredit,
+    isLoading: isOfficerVacationCredit,
+    error: officerVacationCreditError,
+  } = useQuery(
+    "getOfficerVacationCredit",
+    () =>
+      fetchOfficerVacationsCreditInYear(
+        storedVacationData.officer,
+        getCurrentYear()
+      ),
+    {
+      cacheTime: 0,
+      enabled: !!storedVacationData,
+    }
+  );
+  useEffect(() => {
+    socket.on("refetch-vacations-data", refetchVacations);
+    return () => {
+      socket.off("refetch-vacations-data", refetchVacations);
+    };
+  }, []);
+  console.log({ storedVacationData });
+  if (isVacationsLoading) {
+    return <HorizontalSpinner></HorizontalSpinner>;
+  }
 
   return (
     <>
       <div className="bg-white container d-flex flex-column justify-center">
         <hr />
         <h1>التفاصيل</h1>
+
+        <hr />
+        <div id="vacation-data" className="fs-3 p-3">
+          <div className="row">
+            الضابط:
+            {storedVacationData.vacation.officer.rank.rank +
+              "/" +
+              storedVacationData.vacation.officer.name}
+          </div>
+          <br />
+          <div className="row">
+            نوع الاجازة:
+            {storedVacationData.vacation.type.vacationType}
+          </div>
+          <br />
+          <div className="row">
+            من:
+            {storedVacationData.vacation.from}
+          </div>
+          <br />
+          <div className="row">
+            الى:
+            {storedVacationData.vacation.to}
+          </div>
+          {storedVacationData.vacation.dayToHaveVactionInsteadOf && (
+            <div className="row">
+              بدلاً عن:
+              {storedVacationData.vacation.dayToHaveVactionInsteadOf}
+            </div>
+          )}
+        </div>
         <hr />
         <ApprovalBlock
-          enabled={
-            userType === userTypes.branchChief || userType === userTypes.admin
-          }
+          id={props.vacationId}
+          enabled={true}
           title="موافقة رئيس الفرع"
+          allowedUserType={userTypes.branchChief}
+          updateLink="api/vacation/update"
+          approvalPropertyName="branchChiefApproved"
+          noticePropertyName="branchChiefNotice"
+          storedData={storedVacationData}
         />
         <hr />
         <ApprovalBlock
-          enabled={
-            userType === userTypes.officersAffairs ||
-            userType === userTypes.admin
-          }
+          id={props.vacationId}
+          enabled={true}
           title="موافقة رئيس فرع شئون الضباط"
-        />
+          allowedUserType={userTypes.officersAffairs}
+          updateLink="api/vacation/update"
+          approvalPropertyName="officersAffairsApproved"
+          noticePropertyName="officersAffairsNotice"
+          storedData={storedVacationData}
+        >
+          <OfficerRemainingVacationsCredit
+            officerId={storedVacationData.vacation.officer._id}
+          />
+        </ApprovalBlock>
         <hr />
         <ApprovalBlock
-          enabled={
-            userType === userTypes.viceManager || userType === userTypes.admin
-          }
+          id={props.vacationId}
+          enabled={true}
           title="موافقة نائب المدير"
+          // allowedUserType={userTypes.viceManager || userTypes.admin}
+          allowedUserType={userTypes.officersAffairs}
+          updateLink="api/vacation/update"
+          approvalPropertyName="viceManagerApproved"
+          noticePropertyName="viceManagerNotice"
+          storedData={storedVacationData}
         />
         <hr />
-        <ApprovalBlock
-          enabled={
-            userType === userTypes.manager || userType === userTypes.admin
-          }
-          title="موافقة المدير"
-        />
+        {storedVacationData.officerType !== userTypes.normalOfficer && (
+          <ApprovalBlock
+            id={props.vacationId}
+            enabled={true}
+            // allowedUserType={userTypes.manager}
+            allowedUserType={userTypes.officersAffairs}
+            title="موافقة المدير"
+            updateLink="api/vacation/update"
+            approvalPropertyName="managerApproved"
+            noticePropertyName="managerNotice"
+            storedData={storedVacationData}
+          />
+        )}
       </div>
     </>
   );

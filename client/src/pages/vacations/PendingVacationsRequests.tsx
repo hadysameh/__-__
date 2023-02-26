@@ -8,6 +8,7 @@ import { selectUserType } from "../../features/auth";
 import { userTypesEnum } from "../../types";
 import PagePagination from "../../components/PagePagination";
 import socket from "../../services/socket-io";
+import getTodaysDate from "../../_helpers/getTodaysDate";
 
 function PendingVacationsRequests() {
   const [rowsPerPage, setRowsPerPage] = useState(20);
@@ -25,49 +26,43 @@ function PendingVacationsRequests() {
 
   useEffect(() => {
     let findParams: any = {};
-    if (userType === userTypesEnum.manager) {
+    if (userType === userTypesEnum.branchChief) {
       findParams = {
-        ManagerApproved: null,
-
-        viceManagerApproved: true,
-
-        OfficersAffairsApproved: true,
-
-        branchChiefApproved: true,
-      };
-    } else if (userType === userTypesEnum.viceManager) {
-      findParams = {
-        ManagerApproved: null,
+        managerApproved: null,
 
         viceManagerApproved: null,
 
-        OfficersAffairsApproved: true,
+        officersAffairsApproved: null,
 
-        branchChiefApproved: true,
+        branchChiefApproved: null,
       };
     } else if (userType === userTypesEnum.officersAffairs) {
       findParams = {
-        ManagerApproved: null,
-
-        viceManagerApproved: null,
-
-        OfficersAffairsApproved: null,
-
+        // officersAffairsApproved: null,
         branchChiefApproved: true,
+        managerApproved: null,
+        viceManagerApproved: null,
       };
-    } else if (userType === userTypesEnum.branchChief) {
+    } else if (userType === userTypesEnum.viceManager) {
       findParams = {
-        ManagerApproved: null,
+        managerApproved: null,
 
         viceManagerApproved: null,
 
-        OfficersAffairsApproved: null,
+        officersAffairsApproved: true,
+      };
+    }
+    if (userType === userTypesEnum.manager) {
+      findParams = {
+        managerApproved: null,
 
-        branchChiefApproved: null,
+        viceManagerApproved: true,
       };
     } else if (userType === userTypesEnum.admin) {
       findParams = {};
     }
+    findParams = { ...findParams, from: { $gte: getTodaysDate() } };
+
     setFindPendingVacationsQuery(findParams);
   }, [userType]);
 
@@ -82,7 +77,11 @@ function PendingVacationsRequests() {
       rowsPerPage,
       pageNumber,
     ],
-    () => getVacations(findPendingVacationsQuery, pageNumber, rowsPerPage)
+    () => getVacations(findPendingVacationsQuery, pageNumber, rowsPerPage),
+    {
+      staleTime: Infinity,
+      cacheTime: 0,
+    }
   );
   useEffect(() => {
     socket.on("refetch-vacations-data", refetchPendingVacations);
@@ -100,7 +99,7 @@ function PendingVacationsRequests() {
   return (
     <>
       <h1>
-        <u>طلبات الاجازة</u>
+        <u>طلبات اجازات الضباط</u>
       </h1>
       <br />
       <VacationsTable

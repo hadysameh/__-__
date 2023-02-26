@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Overlay from "../../../components/Overlay/Overlay";
+import { userTypesEnum } from "../../../types";
+import { selectUserType } from "../../auth";
 import VacationApprovalOverlayContent from "./VacationApprovalOverlayContent";
 
 interface IVacationData {
@@ -10,23 +13,25 @@ interface IVacationData {
   from: any;
   to: any;
   branchChiefApproved: any;
-  OfficersAffairsApproved: any;
+  officersAffairsApproved: any;
   insteadOf: any;
   viceManagerApproved: any;
-  ManagerApproved: any;
+  managerApproved: any;
 }
 interface IProps {
   vacationsData: IVacationData[];
 }
 function VacationsTable(props: IProps) {
+  const userType = useSelector(selectUserType);
   const [isOverLayOpen, setIsOverLayOpen] = useState<boolean>(false);
   const [vactionIdToOpen, setVactionIdToOpen] = useState<string>("");
-
   return (
     <>
-      <Overlay isOpen={isOverLayOpen} setIsOverlayOpen={setIsOverLayOpen}>
-        <VacationApprovalOverlayContent />
-      </Overlay>
+      {isOverLayOpen && (
+        <Overlay isOpen={isOverLayOpen} setIsOverlayOpen={setIsOverLayOpen}>
+          <VacationApprovalOverlayContent vacationId={vactionIdToOpen} />
+        </Overlay>
+      )}
       <div className="d-flex justify-content-around ">
         <div className="d-flex my-2">
           <label className="fs-4">تم التصديق</label>
@@ -61,7 +66,7 @@ function VacationsTable(props: IProps) {
       </div>
       <hr />
       <table
-        className="table table-hover fs-4"
+        className="table table-hover fs-4 fw-bold"
         key={JSON.stringify(props.vacationsData)}
       >
         <thead className={""}>
@@ -91,23 +96,37 @@ function VacationsTable(props: IProps) {
         </thead>
         <tbody>
           {props.vacationsData.map((vacationData: IVacationData) => {
-            console.log({vacationData})
-            const isWaiting =
-              // vacationData.ManagerApproved == null &&
-              vacationData.OfficersAffairsApproved == null &&
-              vacationData.branchChiefApproved == null &&
+            let isVacationDisapproved =
+              vacationData.managerApproved === false ||
+              vacationData.officersAffairsApproved === false ||
+              vacationData.branchChiefApproved === false ||
+              vacationData.viceManagerApproved === false;
+
+            let isVacationWaiting =
+              !isVacationDisapproved &&
               vacationData.viceManagerApproved == null;
-            const isAccepted =
-              // vacationData.ManagerApproved === true &&
-              vacationData.OfficersAffairsApproved === true &&
-              vacationData.branchChiefApproved === true &&
-              vacationData.viceManagerApproved === true;
+
+            let isVacationApproved = vacationData.viceManagerApproved === true;
+
+            if (userType !== userTypesEnum.normalOfficer) {
+              isVacationWaiting =
+                isVacationWaiting || vacationData.managerApproved == null;
+
+              isVacationApproved =
+                isVacationApproved && vacationData.managerApproved === true;
+            }
+            console.log({
+              vacationData,
+              isVacationWaiting,
+              isVacationApproved,
+            });
             let className = "";
-            if (isAccepted) {
+
+            if (isVacationApproved) {
               className = "text-success";
-            } else if (isWaiting) {
+            } else if (isVacationWaiting) {
               className = "text-warning";
-            } else {
+            } else if (isVacationDisapproved) {
               className = "text-danger";
             }
             return (
@@ -125,7 +144,9 @@ function VacationsTable(props: IProps) {
                 <td style={{ width: "15%" }}>{vacationData.vacationType}</td>
                 <td style={{ width: "17%" }}>{vacationData.from}</td>
                 <td style={{ width: "17%" }}>{vacationData.to}</td>
-                <td style={{ width: "17%" }}>{vacationData.insteadOf}</td>
+                <td style={{ width: "17%" }}>
+                  {vacationData.insteadOf || "لايوجد"}
+                </td>
                 <td style={{ width: "10%" }}>
                   <button
                     className="btn btn-lg btn-secondary"

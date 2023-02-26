@@ -9,17 +9,12 @@ function Home() {
             <div className="col-xl-3 col-lg-6">
               <Card cardTitle="الأجازات " link="/vacations" />
             </div>
-            <div className="col-xl-3 col-lg-6">
-              <Card cardTitle=" مواعيد الدخول والخروح" link="/waredbox" />
-            </div>
             {/* <div className="col-xl-3 col-lg-6">
-              <Card
-                cardTitle="مكاتبات قريبة او تجاوزت الحد الاقصى للتنفذ"
-                link="/redcirclewaredbox"
-                backgroundColor="red"
-                textColor="white"
-              />
+              <Card cardTitle=" مواعيد الدخول والخروح" link="/ " />
             </div> */}
+            <div className="col-xl-3 col-lg-6">
+              <Card cardTitle="المأموريات" link="/errands" />
+            </div>
           </div>
         </div>
 
