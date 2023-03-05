@@ -9,7 +9,10 @@ export default class OfficersController {
       const userType = req.user.userType.userType;
       const userBranch = req.user.officer.branch;
 
-      let modifiedParams = JSON.parse(String(officersModelParams));
+      let modifiedParams: any = {};
+      if (officersModelParams) {
+        modifiedParams = JSON.parse(String(officersModelParams));
+      }
 
       if (userType == userTypesEnum.branchChief) {
         const brachOfficers = await getOfficersRepo.getOfficers({

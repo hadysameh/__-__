@@ -5,8 +5,8 @@ import axios from "axios";
 //   return await axios.get("http://localhost:3125/api/getofficers");
 // };
 
-async function fetchPosts() {
-  const { data } = await axios.get("/api/getofficers");
+async function fetchOfficers() {
+  const { data } = await axios.get("/api/officers/getofficers");
   return data;
 }
-export default fetchPosts;
+export default fetchOfficers;

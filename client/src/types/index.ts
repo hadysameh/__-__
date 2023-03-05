@@ -1,8 +1,8 @@
 export interface IShiftRowData {
   date: string;
-  dutyManagerOfficer: string | null;
-  strategicDutyManagerOfficer: string | null;
-  shiftOfficer: string | null;
+  dutyManagerOfficer: any;
+  strategicDutyManagerOfficer: any;
+  shiftOfficer: any;
 }
 
 export enum userTypes {

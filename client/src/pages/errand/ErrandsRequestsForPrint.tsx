@@ -9,6 +9,7 @@ import PagePagination from "../../components/PagePagination";
 import getErrands from "../../features/errands/serverApis/get";
 import HorizontalSpinner from "../../components/HorizontalSpinner";
 import getTodaysDate from "../../_helpers/getTodaysDate";
+import getPrintPageHtml from "../../_helpers/getPrintPageHtml";
 
 function ErrandsRequestsForPrint() {
   const userType = useSelector(selectUserType);
@@ -24,32 +25,9 @@ function ErrandsRequestsForPrint() {
       "left=0,top=0,width=650,height=450,toolbar=no,scrollbars=0,status=0"
     );
     if (WinPrint && divToPrint) {
-      const documentContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <base href="/" />
-         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>اجازات الضباط التي تحتاج موافقة</title>
-        <style>
-        table, th, td {
-          border: 1px solid;
-          text-align:center;
-          font-size:15px
-        }
-        </style>
-    </head>
-    <body>
-        ${divToPrint.innerHTML}
-    </body>
-    </html>
-    
-    `;
+      const pageTitle = "طلبات المأموريات التي تحتاج موافقة";
+      const documentContent = getPrintPageHtml(divToPrint.innerHTML, pageTitle);
+
       WinPrint.document.write(documentContent);
       WinPrint.focus();
       WinPrint.print();

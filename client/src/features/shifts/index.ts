@@ -1,2 +1,2 @@
 import ShiftsForm from "./shiftsForm";
-export {ShiftsForm};
+export { ShiftsForm };

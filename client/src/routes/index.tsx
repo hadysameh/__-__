@@ -12,6 +12,7 @@ import Home from "../pages/home/Home";
 import vacationsRoutes from "./vacationsRoutes";
 import vacationsCreditRoutes from "./vacationsCreditRoutes";
 import errandsRoutes from "./errandsRoutes";
+import DailyAttendance from "../pages/dailyTtendance";
 
 const ForeOtherRoutes = () => {
   const navigate = useNavigate();
@@ -34,6 +35,15 @@ let routes = (
               <RedirectIfNotAuth>
                 {/* <>home</> */}
                 <Home />
+              </RedirectIfNotAuth>
+            }
+          />
+          <Route
+            path="/dailyattendance"
+            element={
+              <RedirectIfNotAuth>
+                {/* <>home</> */}
+                <DailyAttendance />
               </RedirectIfNotAuth>
             }
           />

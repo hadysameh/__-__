@@ -5,6 +5,7 @@ export interface IOfficerModel {
   id: any;
   name: string;
   rank: Types.ObjectId;
+  sequenceNumber: Number;
   height: string;
   weight: string;
   dateOfBirth: string;
@@ -16,14 +17,16 @@ export interface IRankModel {
   rank: string;
 }
 
-export interface IShiftData {
-  date: Date;
+export interface IDailyShiftData {
+  date: string;
   dutyManagerOfficer: string | null;
   strategicDutyManagerOfficer: string | null;
   shiftOfficer: string | null;
 }
 export interface IShiftModel {
-  audit: IShiftData[];
+  monthlyShift: IDailyShiftData[];
+  month: string;
+  year: string;
 }
 
 export interface IUserModel {

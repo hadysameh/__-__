@@ -8,9 +8,9 @@ import errandsRouter from "./errandsRoutes";
 import officersRouter from "./officersRoutes";
 import vacationsCreditRouter from "./vacationsCreditRoutes";
 import vacationsRouter from "./vacationsRoutes";
-
+import shiftsRouter from "./shiftsRoutes";
 // console.log(routes)
-
+import dailyAttendanceRouter from "./dailyAttendance";
 export let routesAssigner = (app: Express): void => {
   //   app.use("/api/", saderRouter);
   //   app.use("/api/", waredRouter);
@@ -20,4 +20,6 @@ export let routesAssigner = (app: Express): void => {
   app.use("/api/", vacationsRouter);
   app.use("/api/", vacationsCreditRouter);
   app.use("/api/", errandsRouter);
+  app.use("/api/", shiftsRouter);
+  app.use("/api/", dailyAttendanceRouter);
 };

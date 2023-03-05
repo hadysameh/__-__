@@ -9,6 +9,10 @@ const officerSchema = new Schema<IOfficerModel>({
     type: Schema.Types.ObjectId,
     ref: "Rank",
   },
+  sequenceNumber: {
+    type: Number,
+    default: null,
+  },
   height: { type: String, required: false, default: null },
   weight: { type: String, required: false, default: null },
   dateOfBirth: { type: String, required: false },

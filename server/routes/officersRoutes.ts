@@ -5,5 +5,9 @@ import OfficersController from "../controllers/officers/OfficersController";
 
 const officersRouter = express.Router();
 
-officersRouter.get("/getofficers", isAuth, OfficersController.getAllOfficers);
+officersRouter.get(
+  "/officers/getofficers",
+  isAuth,
+  OfficersController.getAllOfficers
+);
 export default officersRouter;
