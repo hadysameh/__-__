@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "639d82416251fabe7be2b859"
+  },
+  "userType": "admin",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd37b5e6f32548a7f8a56a"
+  },
+  "userType": "manager",
+  "premissons": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd37bae6f32548a7f8a56e"
+  },
+  "userType": "viceManager",
+  "premissons": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd37c1e6f32548a7f8a572"
+  },
+  "userType": "officersAffairs",
+  "premissons": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd37c7e6f32548a7f8a576"
+  },
+  "userType": "branchChief",
+  "premissons": [],
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd37cce6f32548a7f8a57a"
+  },
+  "userType": "normalOfficer",
+  "premissons": [],
+  "__v": 0
+}]

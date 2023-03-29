@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "6423518bb39295ceafb5b228"
+  },
+  "officer": {
+    "$oid": "639d82caa0e53b684ed9eeac"
+  },
+  "year": "2023",
+  "__v": 0,
+  "daysToHaveVactionsInsteadOf": [],
+  "erguntVacationsNumber": 7,
+  "remainingErguntVacationsNumber": 7,
+  "remainingYearlyVacationsDaysNumber": 30,
+  "yearlyVacationsDaysNumber": 30
+},{
+  "_id": {
+    "$oid": "642351b8b39295ceafb5b28f"
+  },
+  "officer": {
+    "$oid": "639d82dfa0e53b684ed9eeba"
+  },
+  "year": "2023",
+  "__v": 0,
+  "daysToHaveVactionsInsteadOf": [
+    {
+      "date": "2023-03-28"
+    }
+  ],
+  "erguntVacationsNumber": 7,
+  "remainingErguntVacationsNumber": 7,
+  "remainingYearlyVacationsDaysNumber": 30,
+  "yearlyVacationsDaysNumber": 30
+},{
+  "_id": {
+    "$oid": "642397d5b39295ceafb5f81d"
+  },
+  "officer": {
+    "$oid": "64023f13a229fb2b122149e8"
+  },
+  "year": "2023",
+  "__v": 0,
+  "daysToHaveVactionsInsteadOf": [],
+  "erguntVacationsNumber": 7,
+  "remainingErguntVacationsNumber": 6,
+  "remainingYearlyVacationsDaysNumber": 30,
+  "yearlyVacationsDaysNumber": 30
+},{
+  "_id": {
+    "$oid": "642398a7b39295ceafb5fb45"
+  },
+  "officer": {
+    "$oid": "64023fa2a229fb2b12214a3e"
+  },
+  "year": "2023",
+  "__v": 0,
+  "daysToHaveVactionsInsteadOf": [],
+  "erguntVacationsNumber": 7,
+  "remainingErguntVacationsNumber": 6,
+  "remainingYearlyVacationsDaysNumber": 30,
+  "yearlyVacationsDaysNumber": 30
+}]

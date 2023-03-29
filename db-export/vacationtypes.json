@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "63b8628dad52d4e32b93d6e5"
+  },
+  "vacationType": "عارضة",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b86299ad52d4e32b93d6e9"
+  },
+  "vacationType": "بدل راحة",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b862a5ad52d4e32b93d6ed"
+  },
+  "vacationType": "سنوية",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63fb2a4e5208b37eac787e56"
+  },
+  "vacationType": "راحة اسبوعية",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640ee7cb06475366e2fb3854"
+  },
+  "vacationType": "اجازة ميدانية",
+  "__v": 0
+}]

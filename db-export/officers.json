@@ -1,0 +1,580 @@
+[{
+  "_id": {
+    "$oid": "639d82676251fabe7be2b867"
+  },
+  "name": "هادي سامح فاروق",
+  "rank": {
+    "$oid": "639d82006251fabe7be2b828"
+  },
+  "height": "175",
+  "dateOfBirth": "",
+  "address": "",
+  "branch": {
+    "$oid": "639d803d6251fabe7be2b7f0"
+  },
+  "__v": 0,
+  "sequenceNumber": 35,
+  "weight": null
+},{
+  "_id": {
+    "$oid": "639d82caa0e53b684ed9eeac"
+  },
+  "name": "محمد عصام شبيب",
+  "rank": {
+    "$oid": "639d82006251fabe7be2b828"
+  },
+  "dateOfBirth": "",
+  "address": "",
+  "branch": {
+    "$oid": "639d803d6251fabe7be2b7f0"
+  },
+  "__v": 0,
+  "height": null,
+  "sequenceNumber": 36,
+  "weight": null
+},{
+  "_id": {
+    "$oid": "639d82dfa0e53b684ed9eeba"
+  },
+  "name": "محمد احمد الشيخ",
+  "rank": {
+    "$oid": "639d82006251fabe7be2b828"
+  },
+  "height": "",
+  "branch": {
+    "$oid": "639d803d6251fabe7be2b7f0"
+  },
+  "__v": 0,
+  "address": null,
+  "sequenceNumber": 34,
+  "weight": null
+},{
+  "_id": {
+    "$oid": "63bd3043e6f32548a7f8a535"
+  },
+  "name": "معتز ابراهيم ابو النور",
+  "rank": {
+    "$oid": "639d82296251fabe7be2b845"
+  },
+  "dateOfBirth": "",
+  "branch": {
+    "$oid": "63bd3028e6f32548a7f8a521"
+  },
+  "__v": 0,
+  "address": null,
+  "height": null,
+  "sequenceNumber": 2,
+  "weight": null
+},{
+  "_id": {
+    "$oid": "63bd384fe6f32548a7f8a5c5"
+  },
+  "name": "محمد علي محمد متولي",
+  "rank": {
+    "$oid": "639d82296251fabe7be2b845"
+  },
+  "height": "",
+  "address": "",
+  "branch": {
+    "$oid": "63bd302de6f32548a7f8a525"
+  },
+  "__v": 0,
+  "sequenceNumber": 1,
+  "weight": null
+},{
+  "_id": {
+    "$oid": "63cbaa83e706531583c358ac"
+  },
+  "name": "حسام ابو العلا",
+  "rank": {
+    "$oid": "639d82296251fabe7be2b845"
+  },
+  "height": "",
+  "weight": "",
+  "address": "",
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0,
+  "sequenceNumber": 3
+},{
+  "_id": {
+    "$oid": "63cbaa9ae706531583c358ba"
+  },
+  "name": "احمد صبحي",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0,
+  "sequenceNumber": 12
+},{
+  "_id": {
+    "$oid": "640227d5a229fb2b1221476f"
+  },
+  "name": "خلدون طه مصيلحي",
+  "rank": {
+    "$oid": "639d82246251fabe7be2b841"
+  },
+  "sequenceNumber": 4,
+  "height": "",
+  "weight": null,
+  "address": "",
+  "branch": {
+    "$oid": "639d805f6251fabe7be2b7f9"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640227f8a229fb2b12214780"
+  },
+  "name": "محمد عبدالمنعم شلبي",
+  "rank": {
+    "$oid": "639d82246251fabe7be2b841"
+  },
+  "sequenceNumber": 5,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64022830a229fb2b122147b2"
+  },
+  "name": "حازم توفيق",
+  "rank": {
+    "$oid": "639d82246251fabe7be2b841"
+  },
+  "sequenceNumber": 6,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d805f6251fabe7be2b7f9"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64022859a229fb2b122147ca"
+  },
+  "name": "عمرو عبدالعظيم",
+  "rank": {
+    "$oid": "639d82246251fabe7be2b841"
+  },
+  "sequenceNumber": 7,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d805f6251fabe7be2b7f9"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64022870a229fb2b122147e1"
+  },
+  "name": "ايهاب مصطفى",
+  "rank": {
+    "$oid": "639d82246251fabe7be2b841"
+  },
+  "sequenceNumber": 8,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64022889a229fb2b122147fa"
+  },
+  "name": "هاني الشيخ",
+  "rank": {
+    "$oid": "639d82246251fabe7be2b841"
+  },
+  "sequenceNumber": 9,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640228b0a229fb2b12214816"
+  },
+  "name": "احمد محمود الجافي",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 10,
+  "height": "",
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d81406251fabe7be2b819"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640228c4a229fb2b12214826"
+  },
+  "name": "احمد محمد صلاح",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 11,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d805f6251fabe7be2b7f9"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640228e8a229fb2b1221483f"
+  },
+  "name": "هيثم علاء",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 13,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6402290ea229fb2b12214874"
+  },
+  "name": "محمود عزيز",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 14,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023d6ba229fb2b122148d7"
+  },
+  "name": "ابراهيم محمد متولي",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 15,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023d93a229fb2b122148f0"
+  },
+  "name": "ابراهيم عبدالعاطي",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 16,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023de9a229fb2b12214913"
+  },
+  "name": "اسماعيل مرجان",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 17,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "64023ddea229fb2b1221490c"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023e06a229fb2b1221492b"
+  },
+  "name": "ولاء وهبة",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 18,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80386251fabe7be2b7ec"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023e36a229fb2b12214944"
+  },
+  "name": "احمد عبدالجواد",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 19,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023e55a229fb2b12214965"
+  },
+  "name": "مدحت الريدي",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 20,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d81286251fabe7be2b815"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023e77a229fb2b1221497e"
+  },
+  "name": "رجائي احمد",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 21,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023e93a229fb2b12214997"
+  },
+  "name": "سامح يكم",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 22,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023ebaa229fb2b122149b1"
+  },
+  "name": "محمد مجدي",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 23,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80906251fabe7be2b801"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023ee6a229fb2b122149ce"
+  },
+  "name": "محمد عبدالحميد مجوب",
+  "rank": {
+    "$oid": "639d821b6251fabe7be2b83d"
+  },
+  "sequenceNumber": 24,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d805f6251fabe7be2b7f9"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023f13a229fb2b122149e8"
+  },
+  "name": "محمد عادل شبايك",
+  "rank": {
+    "$oid": "639d82176251fabe7be2b839"
+  },
+  "sequenceNumber": 25,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d803d6251fabe7be2b7f0"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023f3aa229fb2b12214a01"
+  },
+  "name": "سامح عبد الحميد",
+  "rank": {
+    "$oid": "639d82126251fabe7be2b835"
+  },
+  "sequenceNumber": 26,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023f78a229fb2b12214a21"
+  },
+  "name": "مصطفى عبدالرحمن",
+  "rank": {
+    "$oid": "639d82126251fabe7be2b835"
+  },
+  "sequenceNumber": 27,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "64023f6ea229fb2b12214a1b"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023fa2a229fb2b12214a3e"
+  },
+  "name": "محمد حامد العدوي",
+  "rank": {
+    "$oid": "639d82126251fabe7be2b835"
+  },
+  "sequenceNumber": 28,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80836251fabe7be2b7fd"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64023fbca229fb2b12214a4f"
+  },
+  "name": "محمد ترياقي",
+  "rank": {
+    "$oid": "639d82126251fabe7be2b835"
+  },
+  "sequenceNumber": 29,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80906251fabe7be2b801"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64024004a229fb2b12214a6c"
+  },
+  "name": "محمد ابو صبح الشاعر",
+  "rank": {
+    "$oid": "639d82126251fabe7be2b835"
+  },
+  "sequenceNumber": 30,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80316251fabe7be2b7e8"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64024028a229fb2b12214a84"
+  },
+  "name": "سليم احمد سليم",
+  "rank": {
+    "$oid": "639d820d6251fabe7be2b831"
+  },
+  "sequenceNumber": 31,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d81406251fabe7be2b819"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6402404ba229fb2b12214a9f"
+  },
+  "name": "هشام حامد بريقع",
+  "rank": {
+    "$oid": "639d820d6251fabe7be2b831"
+  },
+  "sequenceNumber": 32,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80386251fabe7be2b7ec"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64024074a229fb2b12214ab9"
+  },
+  "name": "محمد حامد الصعيدي",
+  "rank": {
+    "$oid": "639d82006251fabe7be2b828"
+  },
+  "sequenceNumber": 33,
+  "height": null,
+  "weight": null,
+  "address": null,
+  "branch": {
+    "$oid": "639d80386251fabe7be2b7ec"
+  },
+  "__v": 0
+}]

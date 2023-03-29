@@ -1,0 +1,418 @@
+[{
+  "_id": {
+    "$oid": "6403a4206029f6bda4bceb10"
+  },
+  "month": "2",
+  "year": "2023",
+  "__v": 0,
+  "monthlyShift": [
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023d6ba229fb2b122148d7"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023de9a229fb2b12214913"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82676251fabe7be2b867"
+      },
+      "date": "2023-03-01",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624ee9c"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023f13a229fb2b122149e8"
+      },
+      "shiftOfficer": {
+        "$oid": "64023f3aa229fb2b12214a01"
+      },
+      "date": "2023-03-02",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624ee9d"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "640228c4a229fb2b12214826"
+      },
+      "shiftOfficer": {
+        "$oid": "64024004a229fb2b12214a6c"
+      },
+      "date": "2023-03-03",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624ee9e"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023d6ba229fb2b122148d7"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82dfa0e53b684ed9eeba"
+      },
+      "date": "2023-03-04",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624ee9f"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "640228c4a229fb2b12214826"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82676251fabe7be2b867"
+      },
+      "date": "2023-03-05",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea0"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023ee6a229fb2b122149ce"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "640228c4a229fb2b12214826"
+      },
+      "shiftOfficer": {
+        "$oid": "6402404ba229fb2b12214a9f"
+      },
+      "date": "2023-03-06",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea1"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023d93a229fb2b122148f0"
+      },
+      "shiftOfficer": {
+        "$oid": "64023f3aa229fb2b12214a01"
+      },
+      "date": "2023-03-07",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea2"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "640228e8a229fb2b1221483f"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023ee6a229fb2b122149ce"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82676251fabe7be2b867"
+      },
+      "date": "2023-03-08",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea3"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e55a229fb2b12214965"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82dfa0e53b684ed9eeba"
+      },
+      "date": "2023-03-09",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea4"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "63bd384fe6f32548a7f8a5c5"
+      },
+      "shiftOfficer": {
+        "$oid": "64023f3aa229fb2b12214a01"
+      },
+      "date": "2023-03-10",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea5"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e36a229fb2b12214944"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023d93a229fb2b122148f0"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82676251fabe7be2b867"
+      },
+      "date": "2023-03-11",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea6"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e55a229fb2b12214965"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82dfa0e53b684ed9eeba"
+      },
+      "date": "2023-03-12",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea7"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023f13a229fb2b122149e8"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "640228e8a229fb2b1221483f"
+      },
+      "shiftOfficer": {
+        "$oid": "64024004a229fb2b12214a6c"
+      },
+      "date": "2023-03-13",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea8"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "6402290ea229fb2b12214874"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82dfa0e53b684ed9eeba"
+      },
+      "date": "2023-03-14",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eea9"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "63cbaa9ae706531583c358ba"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023e36a229fb2b12214944"
+      },
+      "shiftOfficer": {
+        "$oid": "64024074a229fb2b12214ab9"
+      },
+      "date": "2023-03-15",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeaa"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e36a229fb2b12214944"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82676251fabe7be2b867"
+      },
+      "date": "2023-03-16",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeab"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023de9a229fb2b12214913"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82dfa0e53b684ed9eeba"
+      },
+      "date": "2023-03-17",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeac"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e06a229fb2b1221492b"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023e55a229fb2b12214965"
+      },
+      "shiftOfficer": {
+        "$oid": "6402404ba229fb2b12214a9f"
+      },
+      "date": "2023-03-18",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eead"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e93a229fb2b12214997"
+      },
+      "shiftOfficer": {
+        "$oid": "64023f3aa229fb2b12214a01"
+      },
+      "date": "2023-03-19",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeae"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e77a229fb2b1221497e"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023f13a229fb2b122149e8"
+      },
+      "shiftOfficer": {
+        "$oid": "64024074a229fb2b12214ab9"
+      },
+      "date": "2023-03-20",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeaf"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023de9a229fb2b12214913"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82caa0e53b684ed9eeac"
+      },
+      "date": "2023-03-21",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb0"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023d6ba229fb2b122148d7"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "6402290ea229fb2b12214874"
+      },
+      "shiftOfficer": {
+        "$oid": "64024028a229fb2b12214a84"
+      },
+      "date": "2023-03-22",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb1"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "640228e8a229fb2b1221483f"
+      },
+      "shiftOfficer": {
+        "$oid": "6402404ba229fb2b12214a9f"
+      },
+      "date": "2023-03-23",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb2"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e77a229fb2b1221497e"
+      },
+      "shiftOfficer": {
+        "$oid": "64024074a229fb2b12214ab9"
+      },
+      "date": "2023-03-24",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb3"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "640228c4a229fb2b12214826"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "63cbaa9ae706531583c358ba"
+      },
+      "shiftOfficer": {
+        "$oid": "64024004a229fb2b12214a6c"
+      },
+      "date": "2023-03-25",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb4"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023ee6a229fb2b122149ce"
+      },
+      "shiftOfficer": {
+        "$oid": "64024028a229fb2b12214a84"
+      },
+      "date": "2023-03-26",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb5"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023d93a229fb2b122148f0"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023e06a229fb2b1221492b"
+      },
+      "shiftOfficer": {
+        "$oid": "639d82caa0e53b684ed9eeac"
+      },
+      "date": "2023-03-27",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb6"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "640228e8a229fb2b1221483f"
+      },
+      "shiftOfficer": {
+        "$oid": "6402404ba229fb2b12214a9f"
+      },
+      "date": "2023-03-28",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb7"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e36a229fb2b12214944"
+      },
+      "strategicDutyManagerOfficer": {
+        "$oid": "64023e93a229fb2b12214997"
+      },
+      "shiftOfficer": {
+        "$oid": "64023f3aa229fb2b12214a01"
+      },
+      "date": "2023-03-29",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb8"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023ee6a229fb2b122149ce"
+      },
+      "shiftOfficer": {
+        "$oid": "63cbaa9ae706531583c358ba"
+      },
+      "date": "2023-03-30",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeb9"
+      }
+    },
+    {
+      "dutyManagerOfficer": {
+        "$oid": "64023e93a229fb2b12214997"
+      },
+      "shiftOfficer": {
+        "$oid": "6402404ba229fb2b12214a9f"
+      },
+      "date": "2023-03-31",
+      "_id": {
+        "$oid": "6404604a9f5ecb0da624eeba"
+      }
+    }
+  ]
+}]

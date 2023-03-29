@@ -1,0 +1,118 @@
+[{
+  "_id": {
+    "$oid": "63979fb3f5ed39cbe68be5a1"
+  },
+  "userName": "res0",
+  "password": "$2b$10$0niFSSIxVluT6PSbovq5deaj14mtDVDwe4UyQtKki/TsLZjc7W242",
+  "__v": 0,
+  "userType": {
+    "$oid": "63bd37cce6f32548a7f8a57a"
+  },
+  "officer": {
+    "$oid": "639d82676251fabe7be2b867"
+  }
+},{
+  "_id": {
+    "$oid": "63bd37e6e6f32548a7f8a590"
+  },
+  "userName": "res2",
+  "password": "$2b$10$Qio9V8O8GtOrs3vngNTgiOUf5.YBz6kLwQiWmJYiRwdf2PYDbFDdu",
+  "userType": {
+    "$oid": "63bd37bae6f32548a7f8a56e"
+  },
+  "officer": {
+    "$oid": "63bd3043e6f32548a7f8a535"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd3866e6f32548a7f8a5df"
+  },
+  "userName": "res1",
+  "password": "$2b$10$hFmMjNLTeDczaJOLif1XGeYgF1mOlYjmiEJygevnOPvWH2W8dBe0i",
+  "userType": {
+    "$oid": "63bd37b5e6f32548a7f8a56a"
+  },
+  "officer": {
+    "$oid": "63bd384fe6f32548a7f8a5c5"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd3900e6f32548a7f8a5ff"
+  },
+  "userName": "res50",
+  "password": "$2b$10$qEZbSSqqqz4GwE92OW5EfOU3zHP/mU/hEzM6XFus0pHNm.j52J9ia",
+  "userType": {
+    "$oid": "63bd37cce6f32548a7f8a57a"
+  },
+  "officer": {
+    "$oid": "639d82dfa0e53b684ed9eeba"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63cbaab1e706531583c358d0"
+  },
+  "userName": "res49",
+  "password": "$2b$10$gFZzMQs/Joc4ft6AVdPDzOegQ4OHj.sg0VRjtd/ZFh9VWciB0CiCm",
+  "userType": {
+    "$oid": "639d82416251fabe7be2b859"
+  },
+  "officer": {
+    "$oid": "63cbaa9ae706531583c358ba"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63cbaacae706531583c358e0"
+  },
+  "userName": "res4",
+  "password": "$2b$10$xF8wCOhCv39x/sAW9m1ScOsS3Q5h5XldJaQCCfxUJFHHIqXkquK.G",
+  "userType": {
+    "$oid": "63bd37c7e6f32548a7f8a576"
+  },
+  "officer": {
+    "$oid": "63cbaa83e706531583c358ac"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63e8caf92c9275f63e7d663a"
+  },
+  "userName": "admin",
+  "password": "$2b$10$CDhC1dAa.mDSa6fO/HghI.mIJorQShAsT2U8zj0nlxpw33blqFU8K",
+  "userType": {
+    "$oid": "639d82416251fabe7be2b859"
+  },
+  "officer": {
+    "$oid": "639d82676251fabe7be2b867"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64024299a229fb2b12214c12"
+  },
+  "userName": "res28",
+  "password": "$2b$10$lkS0mZ9jpsB6ew9QRPtuG.RQ3pUv13OTMYTvizExd67EhProi4Rki",
+  "userType": {
+    "$oid": "63bd37c1e6f32548a7f8a572"
+  },
+  "officer": {
+    "$oid": "64023fa2a229fb2b12214a3e"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640ee68906475366e2fb380c"
+  },
+  "userName": "res24",
+  "password": "$2b$10$WqLOuDFt9LTkWxgevD/xou8c8IShDERNtn0rzFX9lFKztJurl1WLO",
+  "userType": {
+    "$oid": "63bd37c7e6f32548a7f8a576"
+  },
+  "officer": {
+    "$oid": "64023f13a229fb2b122149e8"
+  },
+  "__v": 0
+}]
