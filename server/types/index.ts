@@ -55,16 +55,16 @@ export interface IVacationModel {
   insteadOf?: string;
   officer: Types.ObjectId;
   dayToHaveVactionInsteadOf: string;
-  branchChiefApproved?: boolean;
+  branchChiefApproved?: boolean | null;
   branchChiefNotice?: string | null;
 
-  officersAffairsApproved?: boolean;
+  officersAffairsApproved?: boolean | null;
   officersAffairsNotice?: string | null;
 
-  viceManagerApproved?: boolean;
+  viceManagerApproved?: boolean | null;
   viceManagerNotice?: string | null;
 
-  managerApproved?: boolean;
+  managerApproved?: boolean | null;
   managerNotice?: string | null;
 }
 
@@ -74,20 +74,10 @@ export interface IVacationsCreditModel {
   officer: Types.ObjectId;
   erguntVacationsNumber: number;
   remainingErguntVacationsNumber: number;
-  firstHalfyearlyVacationsDaysNumber: number;
-  remainingFirstHalfyearlyVacationsDaysNumber: number;
-  secondHalfyearlyVacationsDaysNumber: number;
-  remainingSecondHalfyearlyVacationsDaysNumber: number;
+  yearlyVacationsDaysNumber: number;
+  remainingYearlyVacationsDaysNumber: number;
   daysToHaveVactionsInsteadOf: { date: string }[];
 }
-// export interface IVacationStatusModel {
-//   vacation: Types.ObjectId;
-//   //موافقة شئون ضباط
-//   OfficersAffairsApproved: boolean;
-//   viceManagerApproved: boolean;
-//   ManagerApproved: boolean;
-//   branchChiefApproved: boolean;
-// }
 
 export interface IVacationTypeModel {
   id: string;

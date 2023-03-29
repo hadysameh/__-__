@@ -32,8 +32,8 @@ function Header() {
       return getPendeingVacationsCout();
     },
     {
-      staleTime: Infinity,
-      cacheTime: 0,
+      // staleTime: Infinity,
+      // cacheTime: 0,
     }
   );
 
@@ -152,22 +152,77 @@ function Header() {
                         انشاء طلب اجازة
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/vacationscredit/myvacationscredit"
+                        className="nav-link active "
+                      >
+                        رصيدي من الأجازات
+                      </Link>
+                    </li>
                     {userType !== "normalOfficer" && (
-                      <li className="nav-item">
-                        <Link
-                          to="/vacations/pendingvacationstoapprove"
-                          className="nav-link active "
-                        >
-                          طلبات اجازة تنتظر الموافقة
-                          {userType !== userTypesEnum.normalOfficer ? (
-                            <span className="bg-danger">
-                              {pendingVacationsCount}
-                            </span>
-                          ) : (
-                            <></>
-                          )}
-                        </Link>
-                      </li>
+                      <>
+                        <li className="nav-item">
+                          <Link
+                            to="/vacations/pendingvacationstoapprove"
+                            className="nav-link active "
+                          >
+                            طلبات اجازة تنتظر الموافقة
+                            {userType !== userTypesEnum.normalOfficer ? (
+                              <span className="bg-danger">
+                                {pendingVacationsCount}
+                              </span>
+                            ) : (
+                              <></>
+                            )}
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link
+                            to="/vacationscredit/officersvacationscredit"
+                            className="nav-link active "
+                          >
+                            ارصدة اجازات الضباط
+                          </Link>
+                        </li>
+                        {(userType === userTypesEnum.officersAffairs ||
+                          userType === userTypesEnum.admin) && (
+                          <li className="nav-item">
+                            <Link
+                              to="/vacationscredit/createorupdate"
+                              className="nav-link active "
+                            >
+                              اضافة او تعديل ارصدة اجازات الضباط
+                            </Link>
+                          </li>
+                        )}
+                        <li className="nav-item">
+                          <Link
+                            to="/vacations/officersvacations"
+                            className="nav-link active "
+                          >
+                            اجازات الضباط
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link
+                            to="vacations/createvacationsforofficer"
+                            className="nav-link active "
+                          >
+                            انشاء طلب اجازة لضابط
+                          </Link>
+                        </li>
+                        {userType == userTypesEnum.officersAffairs && (
+                          <li className="nav-item">
+                            <Link
+                              to="/vacations/vacationsrequestsforprint"
+                              className="nav-link active "
+                            >
+                              طباعة طلبات الاجازت مجمعة{" "}
+                            </Link>
+                          </li>
+                        )}
+                      </>
                     )}
                   </ul>
                 </li>
@@ -220,6 +275,14 @@ function Header() {
                         انشاء طلب مأمورية
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/errands/adderrandreport"
+                        className="nav-link active "
+                      >
+                        اضافة تقرير مأمورية
+                      </Link>
+                    </li>
                     {userType !== userTypesEnum.normalOfficer &&
                       userType !== userTypesEnum.manager && (
                         <li className="nav-item">
@@ -238,8 +301,84 @@ function Header() {
                           </Link>
                         </li>
                       )}
+                    {userType !== userTypesEnum.normalOfficer && (
+                      <li className="nav-item">
+                        <Link
+                          to="/errands/officerserrand"
+                          className="nav-link active "
+                        >
+                          جمع مأموريات الضباط
+                        </Link>
+                      </li>
+                    )}
+                    {userType !== userTypesEnum.normalOfficer && (
+                      <li className="nav-item">
+                        <Link
+                          to="/errands/officerserrandsreports"
+                          className="nav-link active "
+                        >
+                          تقارير مأموريات الضباط
+                        </Link>
+                      </li>
+                    )}
+                    {userType == userTypesEnum.officersAffairs && (
+                      <li className="nav-item">
+                        <Link
+                          to="/errands/errandsrequestsforprint"
+                          className="nav-link active "
+                        >
+                          طباعة طلبات الماموريات مجمعة
+                        </Link>
+                      </li>
+                    )}
                   </ul>
                 </li>
+                <li className="nav-item dropdown text-right ">
+                  <a
+                    className="nav-link dropdown-toggle text-white"
+                    href="#"
+                    id="navbarDropdownMenuLink"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    النوبتجيات
+                  </a>
+                  <ul
+                    className="dropdown-menu fs-3"
+                    aria-labelledby="navbarDropdownMenuLink"
+                  >
+                    <li className="nav-item">
+                      <Link to="/shifts/show" className="nav-link active ">
+                        عرض النوبتجيات{" "}
+                      </Link>
+                    </li>
+                    {userType === userTypesEnum.officersAffairs && (
+                      <li className="nav-item">
+                        <Link
+                          to="/shifts/createorupdate"
+                          className="nav-link active "
+                        >
+                          اضافة او تعديل النوبتجيات{" "}
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
+                </li>
+
+                {(userType === userTypesEnum.officersAffairs ||
+                  userType === userTypesEnum.admin ||
+                  userType === userTypesEnum.viceManager ||
+                  userType === userTypesEnum.manager) && (
+                  <li className="nav-item">
+                    <Link
+                      to="/dailyattendance"
+                      className="nav-link active text-white"
+                    >
+                      تمام الضـبــاط{" "}
+                    </Link>
+                  </li>
+                )}
               </>
             )}
 

@@ -1,31 +1,32 @@
 import VacationsCredit from "../../models/VacationsCredit";
 
 class StoreOrUpdateOfficerVacationsCredit {
-  static async storeOfficerVacationsCredit( 
+  static async storeOfficerVacationsCredit(
     year: any,
     officerId: any,
     erguntVacationsNumber: any,
-    firstHalfyearlyVacationsDaysNumber: any,
-    secondHalfyearlyVacationsDaysNumber: any,
+    remainingErguntVacationsNumber: any,
+    yearlyVacationsDaysNumber: number,
+    remainingYearlyVacationsDaysNumber: any,
     daysToHaveVactionsInsteadOf: []
   ) {
-    let query = {
+    let findQuery = {
       year,
       officer: officerId,
     };
 
-    let updateOrCreate = {
-      officer: officerId,
-      daysToHaveVactionsInsteadOf,
+    let fieldsToUpdateOrCreate = {
       erguntVacationsNumber,
-      firstHalfyearlyVacationsDaysNumber,
-      secondHalfyearlyVacationsDaysNumber,
+      remainingErguntVacationsNumber,
+      yearlyVacationsDaysNumber,
+      remainingYearlyVacationsDaysNumber,
+      daysToHaveVactionsInsteadOf,
     };
 
     let options = { upsert: true, new: true, setDefaultsOnInsert: true };
     let myVacationsCredit = await VacationsCredit.findOneAndUpdate(
-      query,
-      updateOrCreate,
+      findQuery,
+      fieldsToUpdateOrCreate,
       options
     );
     return myVacationsCredit;

@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import PagePagination from "../../components/PagePagination";
 import socket from "../../services/socket-io";
 import Select from "react-select";
-import get from "../../features/officers/serverServices/get";
+import getOfficers from "../../features/officers/serverServices/get";
 import { userTypesEnum } from "../../types";
 
 function MyVacations() {
@@ -23,7 +23,7 @@ function MyVacations() {
     data: officersData,
     isLoading: isOfficersDataLoading,
     error: fetchingOfficersError,
-  } = useQuery("fetchOfficers", get, {
+  } = useQuery("fetchOfficers", getOfficers, {
     staleTime: Infinity,
     cacheTime: 0,
   });

@@ -94,7 +94,7 @@ function VacationsHome() {
             )}
           </div>
           <div className="row py-3 pt-3">
-            {userType !== userTypesEnum.normalOfficer && (
+            {/* {userType === userTypesEnum.officersAffairs && (
               <div className="col-xl-3 col-lg-6">
                 <Card
                   cardTitle=" انشاء طلب اجازة لضابط"
@@ -103,8 +103,8 @@ function VacationsHome() {
                   link="/vacations/createvacationsforofficer"
                 />
               </div>
-            )}
-            {userType == userTypesEnum.officersAffairs && (
+            )} */}
+            {/* {userType == userTypesEnum.officersAffairs && (
               <div className="col-xl-3 col-lg-6">
                 <Card
                   cardTitle="طباعة طلبات الاجازت مجمعة"
@@ -113,7 +113,7 @@ function VacationsHome() {
                   link="/vacations/vacationsrequestsforprint"
                 />
               </div>
-            )}
+            )} */}
           </div>
 
           <div className="row py-3 pt-3"></div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IVacationModelParams } from "../../../types";
 async function getVacations(
-  vacationModelParams: IVacationModelParams = {},
+  vacationModelParams: any = {},
   pageNumber: any = 1,
   rowsPerPage: any = 200
 ) {

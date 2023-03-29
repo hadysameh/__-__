@@ -13,9 +13,8 @@ interface IPorps {
 }
 function ShiftsFormRow(props: IPorps) {
   const [date, setDate] = useState("");
-  const [selectedDutyManagerOfficer, setSelectedDutyManagerOfficer] = useState<
-    any
-  >(null);
+  const [selectedDutyManagerOfficer, setSelectedDutyManagerOfficer] =
+    useState<any>(null);
 
   const [
     selectedStrategicDutyManagerOfficer,

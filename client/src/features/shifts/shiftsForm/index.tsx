@@ -10,6 +10,7 @@ interface IProps {
   month: any;
   year: any;
 }
+
 function ShiftsForm(props: IProps) {
   const navigate = useNavigate();
   const [shiftRows, setShiftRows] = useState<IShiftRowData[]>([]);
@@ -37,17 +38,9 @@ function ShiftsForm(props: IProps) {
   );
   useEffect(() => {
     if (storedMonthShiftsData) {
-      console.log({ storedMonthShiftsData });
       setShiftRows(storedMonthShiftsData.monthlyShift);
     } else {
-      setShiftRows([
-        {
-          date: "",
-          dutyManagerOfficer: null,
-          shiftOfficer: null,
-          strategicDutyManagerOfficer: null,
-        },
-      ]);
+      setShiftRows([]);
     }
   }, [storedMonthShiftsData]);
 
@@ -107,15 +100,17 @@ function ShiftsForm(props: IProps) {
               {shiftRows ? (
                 shiftRows.map((shiftRow, index) => {
                   return (
-                    <ShiftsFormRow
-                      shiftRow={shiftRow}
-                      updateShiftRow={updateShiftRow}
-                      officersData={officersData}
-                      isOfficersDataLoading={isOfficersDataLoading}
-                      removeShiftRow={removeShiftRow}
-                      rowIndex={index}
-                      key={index}
-                    ></ShiftsFormRow>
+                    <>
+                      <ShiftsFormRow
+                        shiftRow={shiftRow}
+                        updateShiftRow={updateShiftRow}
+                        officersData={officersData}
+                        isOfficersDataLoading={isOfficersDataLoading}
+                        removeShiftRow={removeShiftRow}
+                        rowIndex={index}
+                        key={index}
+                      ></ShiftsFormRow>
+                    </>
                   );
                 })
               ) : (
@@ -136,7 +131,6 @@ function ShiftsForm(props: IProps) {
                   strategicDutyManagerOfficer: null,
                 },
               ];
-              console.log({ shiftsRowsAfterAddingNewOne });
               setShiftRows(() => {
                 const newShiftRows = [
                   ...shiftRows,
@@ -147,7 +141,6 @@ function ShiftsForm(props: IProps) {
                     strategicDutyManagerOfficer: null,
                   },
                 ];
-                console.log();
                 return [
                   ...shiftRows,
                   {
@@ -171,7 +164,6 @@ function ShiftsForm(props: IProps) {
                 month: props.month,
                 shiftRows,
               };
-              console.log({ shiftRowsToStore: shiftRows });
               mutation.mutate(dataToStore);
             }}
           >

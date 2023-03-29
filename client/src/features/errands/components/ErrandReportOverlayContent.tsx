@@ -29,7 +29,6 @@ function ErrandReportOverlayContent(props: IProps) {
       alert("الرجاء التحقق من البيانات المدخلة");
     },
   });
-  console.log({ storedErrandData });
   return (
     <div style={{ height: "150vh" }} className="bg-white ">
       <div className="bg-white container d-flex flex-column justify-center">

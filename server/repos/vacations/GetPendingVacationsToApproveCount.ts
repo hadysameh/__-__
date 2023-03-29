@@ -13,14 +13,15 @@ class GetPendingVacationsToApproveCountRepo {
     let queryParams: any = {};
     if (userType == userTypesEnum.manager) {
       normalOfficersIds = await getNormalOfficersIds();
-      queryParams["officer"] = { $nin: normalOfficersIds };
+      // queryParams["officer"] = { $nin: normalOfficersIds };
       queryParams["managerApproved"] = null;
       queryParams["viceManagerApproved"] = true;
     } else if (userType == userTypesEnum.viceManager) {
       queryParams["viceManagerApproved"] = null;
       queryParams["officersAffairsApproved"] = true;
     } else if (userType == userTypesEnum.officersAffairs) {
-      queryParams["officersAffairsApproved"] = null;
+      //we need all vacations that wasn't fully approved
+      queryParams["managerApproved"] = null;
       queryParams["branchChiefApproved"] = true;
     } else if (userType == userTypesEnum.branchChief) {
       const brachOfficers = await getOfficersRepo.getOfficers({
@@ -30,9 +31,9 @@ class GetPendingVacationsToApproveCountRepo {
         (brachOfficer) => brachOfficer.id
       );
       queryParams["officer"] = { $in: brachOfficersId };
-      queryParams["managerApproved"] = null;
-      queryParams["viceManagerApproved"] = null;
-      queryParams["officersAffairsApproved"] = null;
+      // queryParams["managerApproved"] = null;
+      // queryParams["viceManagerApproved"] = null;
+      // queryParams["officersAffairsApproved"] = null;
       queryParams["branchChiefApproved"] = null;
     }
     queryParams = { ...queryParams, from: { $gte: getTodaysDate() } };

@@ -33,29 +33,25 @@ function OfficerRemainingVacationsCredit({ officerId }: IProps) {
         <div className="fs-3">
           <div className="row">
             <div className=" col-lg-6">
-              الرصيد المتبقي من العارضة:{" "}
-              {officerVacationsCreditData[0]?.remainingErguntVacationsNumber ||
-                officerVacationsCreditData[0]?.erguntVacationsNumber}
+              الرصيد المتبقي من العارضة قبل التصديق:{" "}
+              {typeof Number(
+                officerVacationsCreditData[0]?.remainingErguntVacationsNumber
+              ) == "number"
+                ? officerVacationsCreditData[0]?.remainingErguntVacationsNumber
+                : unavailableDataElement}
             </div>
           </div>
           <br />
           <div className="row">
             <div className=" col-lg-6">
-              الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-              {officerVacationsCreditData[0]
-                ?.remainingFirstHalfyearlyVacationsDaysNumber ||
+              الرصيد المتبقي من الاجازات السنوية قبل التصديق :{" "}
+              {
                 officerVacationsCreditData[0]
-                  ?.firstHalfyearlyVacationsDaysNumber}
+                  ?.remainingYearlyVacationsDaysNumber
+              }
             </div>
           </div>
-          <br />
-          <div className="row">
-            <div className=" col-lg-6">
-              الرصيد المتبقي من الاجازات السنوية في النصف الثاني:{" "}
-              {officerVacationsCreditData[0]
-                ?.secondHalfyearlyVacationsDaysNumber || unavailableDataElement}
-            </div>
-          </div>
+
           <br />
         </div>
       )}

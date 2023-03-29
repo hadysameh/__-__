@@ -103,23 +103,23 @@ function VacationsTable(props: IProps) {
               vacationData.viceManagerApproved === false;
 
             let isVacationWaiting =
-              !isVacationDisapproved &&
-              vacationData.viceManagerApproved == null;
+              !isVacationDisapproved && vacationData.managerApproved == null;
 
-            let isVacationApproved = vacationData.viceManagerApproved === true;
+            let isVacationApproved = vacationData.managerApproved === true;
 
-            if (userType !== userTypesEnum.normalOfficer) {
-              isVacationWaiting =
-                isVacationWaiting || vacationData.managerApproved == null;
+            // if (userType !== userTypesEnum.normalOfficer) {
+            //   isVacationWaiting =
+            //     isVacationWaiting || vacationData.managerApproved == null;
 
-              isVacationApproved =
-                isVacationApproved && vacationData.managerApproved === true;
-            }
-            console.log({
-              vacationData,
-              isVacationWaiting,
-              isVacationApproved,
-            });
+            //   isVacationApproved =
+            //     isVacationApproved || vacationData.managerApproved === true;
+            //   console.log("isVacationApproved2: ", isVacationApproved);
+            // }
+            // console.log({
+            //   vacationData,
+            //   isVacationWaiting,
+            //   isVacationApproved,
+            // });
             let className = "";
 
             if (isVacationApproved) {

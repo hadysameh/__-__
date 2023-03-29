@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import Select from "react-select";
 import HorizontalSpinner from "../../components/HorizontalSpinner";
-import get from "../../features/officers/serverServices/get";
+import getOfficers from "../../features/officers/serverServices/get";
 import fetchOfficerVacationsCreditInYear from "../../features/vacationsCredit/serverServices/fetchOfficerVacationsCreditInYear";
 import socket from "../../services/socket-io";
 import getCurrentYear from "../../_helpers/getCurrentYear";
@@ -19,12 +19,12 @@ function OfficersVacationsCredit() {
     data: officersData,
     isLoading: isOfficersDataLoading,
     error: fetchingOfficersError,
-  } = useQuery("fetchOfficers", get, {
+  } = useQuery("fetchOfficers", getOfficers, {
     staleTime: Infinity,
     cacheTime: 0,
   });
   const {
-    data: officerVacationsCreditData,
+    data: officerVacationsCredit,
     isLoading: isOfficerVacationsCreditDataLoading,
     error: fetchingVacationsCreditError,
     refetch: refetchOfficerVacationsCredit,
@@ -95,65 +95,69 @@ function OfficersVacationsCredit() {
         (isOfficerVacationsCreditDataLoading ? (
           <HorizontalSpinner />
         ) : (
-          <div className="fs-3">
-            <div className="row">
-              <div className="col-xl-3 col-lg-6">
-                الرصيد الاساسي من العارضة:{" "}
-                {officerVacationsCreditData[0]?.erguntVacationsNumber ||
-                  unavailableDataElement}
-              </div>
-              <div className="col-xl-3 col-lg-6">
-                الرصيد المتبقي من العارضة:{" "}
-                {officerVacationsCreditData[0]
-                  ?.remainingErguntVacationsNumber ||
-                  officerVacationsCreditData[0]?.erguntVacationsNumber}
-              </div>
-            </div>
-            <br />
-            <div className="row">
-              <div className="col-xl-3 col-lg-6">
-                الرصيد الاساسي من الاجازات السنوية في النصف الأول:{" "}
-                {officerVacationsCreditData[0]
-                  ?.firstHalfyearlyVacationsDaysNumber ||
-                  unavailableDataElement}
-              </div>
-              <div className="col-xl-3 col-lg-6">
-                الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-                {officerVacationsCreditData[0]
-                  ?.remainingFirstHalfyearlyVacationsDaysNumber ||
-                  officerVacationsCreditData[0]
-                    ?.firstHalfyearlyVacationsDaysNumber}
-              </div>
-            </div>
-            <br />
-            <div className="row">
-              <div className="col-xl-3 col-lg-6">
-                الرصيد الاساسي من الاجازات السنوية في النصف الأول:{" "}
-                {officerVacationsCreditData[0]
-                  ?.secondHalfyearlyVacationsDaysNumber ||
-                  unavailableDataElement}
-              </div>
-              <div className="col-xl-3 col-lg-6">
-                الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-                {officerVacationsCreditData[0]
-                  ?.secondHalfyearlyVacationsDaysNumber ||
-                  unavailableDataElement}
-              </div>
-            </div>
-            <br />
-            <div>
-              ايام تستحق بدل راحة:{" "}
-              {officerVacationsCreditData[0]?.daysToHaveVactionsInsteadOf
-                .length || unavailableDataElement}
-              {officerVacationsCreditData[0]?.daysToHaveVactionsInsteadOf.map(
-                (dayToHaveVactionInsteadOf: any) => (
-                  <div key={dayToHaveVactionInsteadOf.date}>
-                    بدلاً عن يوم :{dayToHaveVactionInsteadOf.date}
+          <>
+            {officerVacationsCredit.length ? (
+              <div className="fs-3">
+                <div className="row">
+                  <div className="col-xl-3 col-lg-6">
+                    الرصيد الاساسي من العارضة:{" "}
+                    {typeof Number(
+                      officerVacationsCredit[0]?.erguntVacationsNumber
+                    ) == "number"
+                      ? officerVacationsCredit[0]?.erguntVacationsNumber
+                      : unavailableDataElement}
                   </div>
-                )
-              )}
-            </div>
-          </div>
+                  <div className="col-xl-3 col-lg-6">
+                    الرصيد المتبقي من العارضة:{" "}
+                    {typeof Number(
+                      officerVacationsCredit[0]?.remainingErguntVacationsNumber
+                    ) == "number"
+                      ? officerVacationsCredit[0]
+                          ?.remainingErguntVacationsNumber
+                      : unavailableDataElement}
+                  </div>
+                </div>
+                <br />
+                <div className="row">
+                  <div className="col-xl-3 col-lg-6">
+                    الرصيد الاساسي من الاجازات السنوية :{" "}
+                    {typeof Number(
+                      officerVacationsCredit[0]?.yearlyVacationsDaysNumber
+                    ) == "number"
+                      ? officerVacationsCredit[0]?.yearlyVacationsDaysNumber
+                      : unavailableDataElement}
+                  </div>
+                  <div className="col-xl-3 col-lg-6">
+                    الرصيد المتبقي من الاجازات السنوية :{" "}
+                    {typeof Number(
+                      officerVacationsCredit[0]
+                        ?.remainingYearlyVacationsDaysNumber
+                    ) == "number"
+                      ? officerVacationsCredit[0]
+                          ?.remainingYearlyVacationsDaysNumber
+                      : unavailableDataElement}
+                  </div>
+                </div>
+                <br />
+                <div>
+                  ايام تستحق بدل راحة:{" "}
+                  {officerVacationsCredit[0]?.daysToHaveVactionsInsteadOf
+                    .length || unavailableDataElement}
+                  {officerVacationsCredit[0]?.daysToHaveVactionsInsteadOf.map(
+                    (dayToHaveVactionInsteadOf: any) => (
+                      <div key={dayToHaveVactionInsteadOf.date}>
+                        بدلاً عن يوم :{dayToHaveVactionInsteadOf.date}
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            ) : (
+              <h1>
+                لا يوجد رصيد من الاجازات للضابط في عام {vacationsCreditYear}
+              </h1>
+            )}
+          </>
         ))}
     </div>
   );

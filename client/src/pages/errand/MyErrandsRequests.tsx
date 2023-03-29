@@ -33,6 +33,7 @@ function MyErrandsRequests() {
       cacheTime: 0,
     }
   );
+  console.log({ errands });
   useEffect(() => {
     socket.on("refetch-errands-data", refetch);
     return () => {

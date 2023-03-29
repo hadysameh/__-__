@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import HorizontalSpinner from "../../../components/HorizontalSpinner";
 import Select from "react-select";
-import get from "../../officers/serverServices/get";
+import getOfficers from "../../officers/serverServices/get";
 import storeOrUpdateVacationsCredit from "../serverServices/storeOrUpdateVacationsCredit";
 import getCurrentYear from "../../../_helpers/getCurrentYear";
 import fetchOfficerVacationsCreditInYear from "../serverServices/fetchOfficerVacationsCreditInYear";
@@ -12,21 +12,28 @@ import socket from "../../../services/socket-io";
 function CreatOrUpdateOfficerVacationsForm() {
   const navigate = useNavigate();
 
-  const [vacationsCreditYear, setvacationsCreditYear] = useState(
+  const [vacationsCreditYear, setVacationsCreditYear] = useState(
     getCurrentYear()
   );
   const [selectedOfficer, setSelectedOfficer] = useState<{
     value: any;
     label: any;
   }>();
-  const [erguntVacationsNumber, setErguntVacationsNumber] = useState<any>(0);
   const [
-    firstHalfyearlyVacationsDaysNumber,
-    setFirstyearlyVacationsDaysNumber,
+    officerErguntVacationsNumber,
+    setOfficerErguntVacationsNumber,
   ] = useState<any>(0);
   const [
-    secondHalfyearlyVacationsDaysNumber,
-    setSecondyearlyVacationsDaysNumber,
+    officerRemainingErguntVacationsNumber,
+    setOfficerRemainingErguntVacationsNumber,
+  ] = useState<any>(0);
+  const [
+    officerYearlyVacationsDaysNumber,
+    setOfficerYearlyVacationsDaysNumber,
+  ] = useState<any>(0);
+  const [
+    officerRemainingYearlyVacationsDaysNumber,
+    setOfficerRemainingYearlyVacationsDaysNumber,
   ] = useState<any>(0);
 
   const [
@@ -42,11 +49,10 @@ function CreatOrUpdateOfficerVacationsForm() {
     data: officersData,
     isLoading: isOfficersDataLoading,
     error: fetchingOfficersError,
-  } = useQuery("fetchOfficers", get, {
+  } = useQuery("fetchOfficers", getOfficers, {
     staleTime: Infinity,
     cacheTime: 0,
   });
-
   const {
     data: officerVacationsCreditData,
     isLoading: isOfficerVacationsCreditDataLoading,
@@ -64,28 +70,39 @@ function CreatOrUpdateOfficerVacationsForm() {
       cacheTime: 0,
       enabled: !!selectedOfficer?.value,
       onSuccess(data) {
-        if (data) {
-          setErguntVacationsNumber(data[0]?.erguntVacationsNumber);
-          setFirstyearlyVacationsDaysNumber(
-            data[0]?.firstHalfyearlyVacationsDaysNumber
+        if (data.length) {
+          setOfficerErguntVacationsNumber(data[0]?.erguntVacationsNumber);
+
+          setOfficerRemainingErguntVacationsNumber(
+            data[0].remainingErguntVacationsNumber
           );
-          setSecondyearlyVacationsDaysNumber(
-            data[0]?.secondHalfyearlyVacationsDaysNumber
+
+          setOfficerYearlyVacationsDaysNumber(
+            data[0]?.yearlyVacationsDaysNumber
           );
+          setOfficerRemainingYearlyVacationsDaysNumber(
+            data[0]?.remainingYearlyVacationsDaysNumber
+          );
+
           setDaysToHaveVactionsInsteadOf(
             data[0]?.daysToHaveVactionsInsteadOf || []
           );
+        } else {
+          setOfficerErguntVacationsNumber(0);
+          setOfficerRemainingErguntVacationsNumber(0);
+          setOfficerYearlyVacationsDaysNumber(0);
+          setOfficerRemainingYearlyVacationsDaysNumber(0);
+          setDaysToHaveVactionsInsteadOf([]);
         }
       },
     }
   );
-
   useEffect(() => {
     socket.on("refetch-vacations-data", refetchOfficerVacationsCreditData);
     return () => {
       socket.off("refetch-vacations-data", refetchOfficerVacationsCreditData);
     };
-  }, []);
+  });
   const mutation = useMutation(storeOrUpdateVacationsCredit, {
     onSuccess: (data, variables, context) => {
       navigate("/vacations/");
@@ -94,6 +111,19 @@ function CreatOrUpdateOfficerVacationsForm() {
       alert("الرجاء التحقق من البيانات المدخلة");
     },
   });
+
+  // useEffect(() => {
+  //   if (!isOfficersDataLoading && !officerVacationsCreditData.length) {
+  //     setOfficerRemainingErguntVacationsNumber(officerErguntVacationsNumber);
+  //     setOfficerRemainingYearlyVacationsDaysNumber(
+  //       officerYearlyVacationsDaysNumber
+  //     );
+  //   }
+  // }, [
+  //   officerErguntVacationsNumber,
+  //   officerYearlyVacationsDaysNumber,
+  //   secondHalfyearlyVacationsDaysNumber,
+  // ]);
 
   if (isOfficersDataLoading) {
     return (
@@ -105,7 +135,10 @@ function CreatOrUpdateOfficerVacationsForm() {
   } else {
     return (
       <>
-        <div className="border m-4 p-4">
+        <div
+          className="border m-4 p-4"
+          key={vacationsCreditYear + vacationsCreditYear}
+        >
           <div className="fs-2">
             <u>تعديل او اضافة ارصدة الاجازات </u>
           </div>
@@ -145,7 +178,7 @@ function CreatOrUpdateOfficerVacationsForm() {
                     type="number"
                     className="form-control fs-4"
                     onChange={(e) => {
-                      setvacationsCreditYear(e.target.value);
+                      setVacationsCreditYear(e.target.value);
                     }}
                     defaultValue={vacationsCreditYear}
                   />
@@ -165,12 +198,24 @@ function CreatOrUpdateOfficerVacationsForm() {
                           <input
                             type="number"
                             className="form-control fs-4"
-                            defaultValue={
-                              officerVacationsCreditData[0]
-                                ?.erguntVacationsNumber
-                            }
+                            min={0}
+                            value={officerErguntVacationsNumber}
                             onChange={(e) => {
-                              setErguntVacationsNumber(Number(e.target.value));
+                              const newOfficerErguntVacationsNumber = Number(
+                                e.target.value
+                              );
+                              if (
+                                newOfficerErguntVacationsNumber <
+                                officerRemainingErguntVacationsNumber
+                              ) {
+                                alert(
+                                  `الرصيد المتبقي لايمكن ان يكون اكبر من الرصيد الاساسي`
+                                );
+                              } else {
+                                setOfficerErguntVacationsNumber(
+                                  newOfficerErguntVacationsNumber
+                                );
+                              }
                             }}
                           />
                         </div>
@@ -181,14 +226,25 @@ function CreatOrUpdateOfficerVacationsForm() {
                           <input
                             type="number"
                             className="form-control fs-4"
-                            defaultValue={
-                              officerVacationsCreditData[0]
-                                ?.remainingErguntVacationsNumber ||
-                              officerVacationsCreditData[0]
-                                ?.erguntVacationsNumber
-                            }
+                            min={0}
+                            max={officerErguntVacationsNumber}
+                            value={officerRemainingErguntVacationsNumber}
                             onChange={(e) => {
-                              setErguntVacationsNumber(Number(e.target.value));
+                              const newOfficerRemainingErguntVacationsNumber = Number(
+                                e.target.value
+                              );
+                              if (
+                                newOfficerRemainingErguntVacationsNumber >
+                                officerErguntVacationsNumber
+                              ) {
+                                alert(
+                                  `الرصيد المتبقي لايمكن ان يكون اكبر من الرصيد الاساسي`
+                                );
+                              } else {
+                                setOfficerRemainingErguntVacationsNumber(
+                                  newOfficerRemainingErguntVacationsNumber
+                                );
+                              }
                             }}
                           />
                         </div>
@@ -198,89 +254,58 @@ function CreatOrUpdateOfficerVacationsForm() {
                       <div className="row">
                         <div className="col-5">
                           <label className="form-label">
-                            رصيد الاجازات السنوية الاساسي في النصف الاول
+                            رصيد الاجازات السنوية الاساسي
                           </label>
                           <input
                             type="number"
-                            max={15}
                             min={0}
-                            defaultValue={
-                              officerVacationsCreditData[0]
-                                ?.firstHalfyearlyVacationsDaysNumber
-                            }
+                            value={officerYearlyVacationsDaysNumber}
                             className="form-control fs-4"
                             onChange={(e) => {
-                              setFirstyearlyVacationsDaysNumber(
-                                Number(e.target.value)
+                              const newOfficerYearlyVacationsDaysNumber = Number(
+                                e.target.value
                               );
+                              if (
+                                newOfficerYearlyVacationsDaysNumber <
+                                officerRemainingYearlyVacationsDaysNumber
+                              ) {
+                                alert(
+                                  `الرصيد المتبقي لايمكن ان يكون اكبر من الرصيد الاساسي`
+                                );
+                              } else {
+                                setOfficerYearlyVacationsDaysNumber(
+                                  newOfficerYearlyVacationsDaysNumber
+                                );
+                              }
                             }}
                           />
                         </div>
                         <div className="col-5">
                           <label className="form-label">
-                            رصيد الاجازات السنوية المتبقي في النصف الاول
+                            رصيد الاجازات السنوية المتبقي
                           </label>
                           <input
                             type="number"
-                            max={15}
                             min={0}
-                            defaultValue={
-                              officerVacationsCreditData[0]
-                                ?.remainingFirstHalfyearlyVacationsDaysNumber ||
-                              officerVacationsCreditData[0]
-                                ?.firstHalfyearlyVacationsDaysNumber
-                            }
+                            max={officerYearlyVacationsDaysNumber}
+                            value={officerRemainingYearlyVacationsDaysNumber}
                             className="form-control fs-4"
                             onChange={(e) => {
-                              setFirstyearlyVacationsDaysNumber(
-                                Number(e.target.value)
+                              const newOfficerRemainingYearlyVacationsDaysNumber = Number(
+                                e.target.value
                               );
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mb-3">
-                      <div className="row">
-                        <div className="col-5">
-                          <label className="form-label">
-                            رصيد الاجازات السنويةالاساسي في النصف الثاني
-                          </label>
-                          <input
-                            type="number"
-                            max={15}
-                            min={0}
-                            defaultValue={
-                              officerVacationsCreditData[0]
-                                ?.secondHalfyearlyVacationsDaysNumber
-                            }
-                            className="form-control fs-4"
-                            onChange={(e) => {
-                              setSecondyearlyVacationsDaysNumber(
-                                Number(e.target.value)
-                              );
-                            }}
-                          />
-                        </div>
-                        <div className="col-5">
-                          <label className="form-label">
-                            رصيد الاجازات السنوية المتبقي في النصف الثاني
-                          </label>
-                          <input
-                            type="number"
-                            max={15}
-                            min={0}
-                            defaultValue={
-                              officerVacationsCreditData[0]
-                                ?.remainingSecondHalfyearlyVacationsDaysNumber ||
-                              officerVacationsCreditData[0]
-                                ?.secondHalfyearlyVacationsDaysNumber
-                            }
-                            className="form-control fs-4"
-                            onChange={(e) => {
-                              setSecondyearlyVacationsDaysNumber(
-                                Number(e.target.value)
-                              );
+                              if (
+                                newOfficerRemainingYearlyVacationsDaysNumber >
+                                officerYearlyVacationsDaysNumber
+                              ) {
+                                alert(
+                                  `الرصيد المتبقي لايمكن ان يكون اكبر من الرصيد الاساسي`
+                                );
+                              } else {
+                                setOfficerRemainingYearlyVacationsDaysNumber(
+                                  newOfficerRemainingYearlyVacationsDaysNumber
+                                );
+                              }
                             }}
                           />
                         </div>
@@ -304,7 +329,6 @@ function CreatOrUpdateOfficerVacationsForm() {
                                 <input
                                   type="date"
                                   className="form-control fs-4"
-                                  // value={daysToHaveVactionsInsteadOf[index].date}
                                   defaultValue={
                                     daysToHaveVactionsInsteadOf[index].date
                                   }
@@ -366,21 +390,24 @@ function CreatOrUpdateOfficerVacationsForm() {
                   if (
                     !(
                       selectedOfficer?.value &&
-                      firstHalfyearlyVacationsDaysNumber &&
-                      secondHalfyearlyVacationsDaysNumber &&
-                      erguntVacationsNumber
+                      // firstHalfyearlyVacationsDaysNumber &&
+                      // secondHalfyearlyVacationsDaysNumber &&
+                      officerErguntVacationsNumber
                     )
                   ) {
                     alert("الرجاء التحقق من البيانات المدخلة");
                   } else {
-                    mutation.mutate({
+                    const dataToStore = {
                       year: vacationsCreditYear,
                       officerId: selectedOfficer.value,
-                      erguntVacationsNumber,
-                      firstHalfyearlyVacationsDaysNumber,
-                      secondHalfyearlyVacationsDaysNumber,
+                      erguntVacationsNumber: officerErguntVacationsNumber,
+                      remainingErguntVacationsNumber: officerRemainingErguntVacationsNumber,
+                      yearlyVacationsDaysNumber: officerYearlyVacationsDaysNumber,
+                      remainingYearlyVacationsDaysNumber: officerRemainingYearlyVacationsDaysNumber,
                       daysToHaveVactionsInsteadOf,
-                    });
+                    };
+
+                    mutation.mutate(dataToStore);
                   }
                 }}
               >

@@ -21,10 +21,20 @@ class GetDailyAttendanceRepo {
     const todaysVacations = await Vacation.find({
       to: { $gte: getTodaysDate() },
       from: { $lte: getTodaysDate() },
-    }).populate({
-      path: "officer",
-      model: "Officer",
-    });
+      viceManagerApproved: true,
+    })
+      .populate({
+        path: "officer",
+        model: "Officer",
+        populate: {
+          path: "rank",
+          model: "Rank",
+        },
+      })
+      .populate({
+        path: "type",
+        model: "VacationType",
+      });
     let officersInVacationIds = [];
     for (let index = 0; index < todaysVacations.length; index++) {
       const todaysOfficerVacation = todaysVacations[index];
@@ -34,10 +44,21 @@ class GetDailyAttendanceRepo {
     const todaysErrands = await Errand.find({
       toDate: { $gte: getTodaysDate() },
       fromDate: { $lte: getTodaysDate() },
-    }).populate({
-      path: "officer",
-      model: "Officer",
-    });
+      viceManagerApproved: true,
+    })
+      .populate({
+        path: "officer",
+        model: "Officer",
+        populate: {
+          path: "rank",
+          model: "Rank",
+        },
+      })
+      .populate({
+        path: "errandType",
+        model: "ErrandType",
+      })
+      .sort("sequenceNumber");
     let officersInErrandsIds = [];
     for (let index = 0; index < todaysErrands.length; index++) {
       const todaysOfficerErrand = todaysErrands[index];
@@ -85,7 +106,16 @@ class GetDailyAttendanceRepo {
 
     const AvailableOfficers = await Officer.find({
       _id: { $nin: [...officersInErrandsIds, ...officersInVacationIds] },
-    });
+    })
+      .populate<any>({
+        path: "rank",
+        model: "Rank",
+      })
+      .populate<any>({
+        path: "branch",
+        model: "Branch",
+      })
+      .sort("sequenceNumber");
     const { monthlyShift } = currentMonthShifts;
     const results = {
       todaysVacations,

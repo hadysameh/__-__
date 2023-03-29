@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { userTypes } from "../../../types";
 import { selectUserType } from "../../auth";
-import ApprovalBlock from "../../../components/ApprovalBlock";
+import ApprovalBlock from "./ApprovalBlock";
 import { useEffect } from "react";
 import socket from "../../../services/socket-io";
 import getOneErrand from "../serverApis/getOne";
@@ -18,12 +18,11 @@ function ErrandApprovalOverlayContent(props: IProps) {
     isLoading: isVacationsLoading,
     error: vacationError,
     refetch: refetchErrands,
-  } = useQuery("getOneVacation", () => getOneErrand(props.errandId), {
+  } = useQuery("getOneErrand", () => getOneErrand(props.errandId), {
     staleTime: Infinity,
     cacheTime: 0,
     enabled: !!props.errandId,
   });
-  console.log({ storedErrandsData });
   useEffect(() => {
     socket.on("refetch-errands-data", refetchErrands);
     return () => {
@@ -75,7 +74,7 @@ function ErrandApprovalOverlayContent(props: IProps) {
           id={props.errandId}
           enabled={true}
           title="موافقة رئيس الفرع"
-          allowedUserType={userTypes.branchChief}
+          allowedUserTypes={[userTypes.branchChief]}
           updateLink="api/errand/update"
           approvalPropertyName="branchChiefApproved"
           noticePropertyName="branchChiefNotice"
@@ -86,7 +85,7 @@ function ErrandApprovalOverlayContent(props: IProps) {
           id={props.errandId}
           enabled={true}
           title="موافقة رئيس فرع شئون الضباط"
-          allowedUserType={userTypes.officersAffairs}
+          allowedUserTypes={[userTypes.officersAffairs]}
           updateLink="api/errand/update"
           approvalPropertyName="officersAffairsApproved"
           noticePropertyName="officersAffairsNotice"
@@ -97,7 +96,7 @@ function ErrandApprovalOverlayContent(props: IProps) {
           id={props.errandId}
           enabled={true}
           title="موافقة نائب المدير"
-          allowedUserType={userTypes.officersAffairs || userTypes.admin}
+          allowedUserTypes={[userTypes.officersAffairs, userTypes.viceManager]}
           // allowedUserType={userTypes.viceManager || userTypes.admin}
           updateLink="api/errand/update"
           approvalPropertyName="viceManagerApproved"

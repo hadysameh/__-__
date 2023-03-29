@@ -15,10 +15,10 @@ class GetVacationsRepo {
     }
     pageNumber = pageNumber - 1;
     let normalOfficersIds: any = [];
-    if (isRequestingUserOfManagerType) {
-      normalOfficersIds = await getNormalOfficersIds();
-      queryParams["officer"] = { $nin: normalOfficersIds };
-    }
+    // if (isRequestingUserOfManagerType) {
+    //   normalOfficersIds = await getNormalOfficersIds();
+    //   queryParams["officer"] = { $nin: normalOfficersIds };
+    // }
     let vacations = await Vacation.find(queryParams ? queryParams : {})
       .limit(Number(rowsPerPage))
       .skip(Number(pageNumber) * Number(rowsPerPage))

@@ -14,7 +14,6 @@ class GetErrandsRepo {
       };
       delete queryParams["errnadsWithReportsOnly"];
     }
-    console.log({ queryParams });
     let errands = await Errand.find(queryParams ? queryParams : {})
       .limit(Number(rowsPerPage))
       .skip(Number(pageNumber) * Number(rowsPerPage))

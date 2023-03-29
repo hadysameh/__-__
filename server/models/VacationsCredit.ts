@@ -17,29 +17,18 @@ const vacationsCreditSchema = new Schema<IVacationsCreditModel>({
     index: true,
     default: null,
   },
-  firstHalfyearlyVacationsDaysNumber: {
+  yearlyVacationsDaysNumber: {
     type: Number,
     required: true,
     index: true,
   },
-  remainingFirstHalfyearlyVacationsDaysNumber: {
+  remainingYearlyVacationsDaysNumber: {
     type: Number,
     required: true,
     index: true,
     default: null,
-  },
-  secondHalfyearlyVacationsDaysNumber: {
-    type: Number,
-    required: true,
-    index: true,
   },
 
-  remainingSecondHalfyearlyVacationsDaysNumber: {
-    type: Number,
-    required: true,
-    index: true,
-    default: null,
-  },
   daysToHaveVactionsInsteadOf: {
     date: [String],
     default: [],

@@ -9,7 +9,7 @@ function ShiftsHome() {
     <>
       <div className="text-center fs-1">
         <br />
-        <u>النوبتاجيات</u>
+        <u>النوبتجيات</u>
         <div className="" style={{ height: "80vh" }}>
           <div className="container" dir="rtl">
             <div className="row py-3 pt-3">
@@ -17,7 +17,7 @@ function ShiftsHome() {
                 userType === userTypesEnum.admin) && (
                 <div className="col-xl-3 col-lg-6">
                   <Card
-                    cardTitle="اضافة او تعديل النوبتاجيات"
+                    cardTitle="اضافة او تعديل النوبتجيات"
                     backgroundColor=""
                     textColor=""
                     link="/shifts/createorupdate"
@@ -27,7 +27,7 @@ function ShiftsHome() {
               {userType !== ""}
               <div className="col-xl-3 col-lg-6">
                 <Card
-                  cardTitle="عرض النوبتاجيات"
+                  cardTitle="عرض النوبتجيات"
                   backgroundColor=""
                   textColor=" "
                   link="/shifts/show"

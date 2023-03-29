@@ -1,6 +1,11 @@
 import Card from "../../components/Card";
+import { selectUserType } from "../../features/auth";
+import { useSelector } from "react-redux";
+import { userTypesEnum } from "../../types";
 
 function Home() {
+  const userType = useSelector(selectUserType);
+
   return (
     <>
       <div className="" style={{ height: "80vh" }}>
@@ -14,11 +19,16 @@ function Home() {
             </div>
 
             <div className="col-xl-3 col-lg-6">
-              <Card cardTitle="النوبتاجيات" link="/shifts" />
+              <Card cardTitle="النوبتجيات" link="/shifts" />
             </div>
-            <div className="col-xl-3 col-lg-6">
-              <Card cardTitle="تمام الضباط" link="/dailyattendance" />
-            </div>
+            {(userType === userTypesEnum.officersAffairs ||
+              userType === userTypesEnum.admin ||
+              userType === userTypesEnum.viceManager ||
+              userType === userTypesEnum.manager) && (
+              <div className="col-xl-3 col-lg-6">
+                <Card cardTitle="تمام الضباط" link="/dailyattendance" />
+              </div>
+            )}
           </div>
         </div>
 

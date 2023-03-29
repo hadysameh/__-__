@@ -27,8 +27,8 @@ function VacationRequestsForPrint() {
   const [pageNumber, setPageNumber] = useState(1);
   const findPendingVacationsQuery = {
     branchChiefApproved: true,
+    $or: [{ viceManagerApproved: null }, { viceManagerApproved: true }],
     managerApproved: null,
-    viceManagerApproved: null,
     from: { $gte: getTodaysDate() },
   };
   const {

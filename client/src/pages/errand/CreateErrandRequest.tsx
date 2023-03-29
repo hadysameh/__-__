@@ -116,6 +116,7 @@ function CreateErrandRequest() {
                 <input
                   type="date"
                   className="form-control fs-4"
+                  min={fromDate}
                   onChange={(e) => {
                     setToDate(e.target.value);
                   }}
@@ -152,7 +153,6 @@ function CreateErrandRequest() {
                   } else if (userType === userTypesEnum.viceManager) {
                     objToStore["viceManagerApproved"] = true;
                   }
-                  console.log({ objToStore });
                   mutation.mutate(objToStore);
                 }
               }}

@@ -30,19 +30,22 @@ class vacationsCreditController {
         year,
         officerId,
         erguntVacationsNumber,
-        firstHalfyearlyVacationsDaysNumber,
-        secondHalfyearlyVacationsDaysNumber,
+        remainingErguntVacationsNumber,
+        yearlyVacationsDaysNumber,
+        remainingYearlyVacationsDaysNumber,
         daysToHaveVactionsInsteadOf,
       } = req.body;
+
       const myvacations = await StoreOrUpdateRepo.storeOfficerVacationsCredit(
         year,
         officerId,
         erguntVacationsNumber,
-        firstHalfyearlyVacationsDaysNumber,
-        secondHalfyearlyVacationsDaysNumber,
+        remainingErguntVacationsNumber,
+        yearlyVacationsDaysNumber,
+        remainingYearlyVacationsDaysNumber,
         daysToHaveVactionsInsteadOf
       );
-      emitSocketEvent('refetch-vacations-data')
+      emitSocketEvent("refetch-vacations-data");
 
       res.json(myvacations);
     } catch (error) {

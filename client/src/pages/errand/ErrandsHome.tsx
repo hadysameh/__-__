@@ -5,11 +5,7 @@ import { userTypesEnum } from "../../types";
 
 function ErrandsHome() {
   const userType = useSelector(selectUserType);
-  console.log({
-    "normalOfficer&&manager":
-      userType !== userTypesEnum.normalOfficer &&
-      userType !== userTypesEnum.manager,
-  });
+
   return (
     <>
       <div className="text-center fs-1">

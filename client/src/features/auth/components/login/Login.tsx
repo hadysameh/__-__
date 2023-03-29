@@ -16,10 +16,7 @@ export function Login() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log({
-              userName,
-              password,
-            });
+
             postloginData({
               userName,
               password,
@@ -46,7 +43,7 @@ export function Login() {
               })
               .catch((err) => {
                 console.log({ err });
-                // alert(err.response.data.msg);
+                alert("خطأ في اسم المستخدم او كلمة المرور");
               });
           }}
         >

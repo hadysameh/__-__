@@ -48,8 +48,7 @@ global.io = io;
 app.use(adminJs.options.rootPath, router);
 app.use(bodyParser());
 app.use((req, res, next) => {
-  console.log("req to server", { url: req.url });
-  // console.log({ req });
+  // console.log("req to server", { url: req.url });
   next();
 });
 app.use(bodyParser.json());
@@ -66,7 +65,7 @@ const nodeEnviromment = process.env.NODE_ENV as string;
 if (nodeEnviromment == "production") {
   app.use(express.static("../client/build"));
   app.get("/*", (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, "../mokatabat-client/build/index.html"));
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
   });
 }
 
@@ -74,6 +73,6 @@ let port: string = process.env.PORT as string;
 server.listen(port, () => {
   console.log("app runs on " + port);
 });
-mongoose.connect("mongodb://localhost:27017/test").then(() => {
+mongoose.connect("mongodb://0.0.0.0:27017/test").then(() => {
   console.log("mongo db connected");
 });

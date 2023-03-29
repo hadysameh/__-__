@@ -10,6 +10,7 @@ import HorizontalSpinner from "../../../components/HorizontalSpinner";
 import fetchOfficerVacationsCreditInYear from "../../vacationsCredit/serverServices/fetchOfficerVacationsCreditInYear";
 import getCurrentYear from "../../../_helpers/getCurrentYear";
 import OfficerRemainingVacationsCredit from "../../vacationsCredit/components/OfficerRemainingVacationsCredit";
+import calculateDiffreneceBetweenDates from "../../../_helpers/calculateDiffreneceBetweenDates";
 interface IProps {
   vacationId: string;
 }
@@ -48,7 +49,6 @@ function VacationApprovalOverlayContent(props: IProps) {
       socket.off("refetch-vacations-data", refetchVacations);
     };
   }, []);
-  console.log({ storedVacationData });
   if (isVacationsLoading) {
     return <HorizontalSpinner></HorizontalSpinner>;
   }
@@ -74,6 +74,17 @@ function VacationApprovalOverlayContent(props: IProps) {
           </div>
           <br />
           <div className="row">
+            المدة:
+            {(() => {
+              const diffBetweenFromAndTo = calculateDiffreneceBetweenDates(
+                storedVacationData.vacation.to,
+                storedVacationData.vacation.from
+              );
+              return diffBetweenFromAndTo + 1;
+            })()}
+          </div>
+          <br />
+          <div className="row">
             من:
             {storedVacationData.vacation.from}
           </div>
@@ -94,7 +105,7 @@ function VacationApprovalOverlayContent(props: IProps) {
           id={props.vacationId}
           enabled={true}
           title="موافقة رئيس الفرع"
-          allowedUserType={userTypes.branchChief}
+          allowedUserTypes={[userTypes.branchChief]}
           updateLink="api/vacation/update"
           approvalPropertyName="branchChiefApproved"
           noticePropertyName="branchChiefNotice"
@@ -105,7 +116,7 @@ function VacationApprovalOverlayContent(props: IProps) {
           id={props.vacationId}
           enabled={true}
           title="موافقة رئيس فرع شئون الضباط"
-          allowedUserType={userTypes.officersAffairs}
+          allowedUserTypes={[userTypes.officersAffairs]}
           updateLink="api/vacation/update"
           approvalPropertyName="officersAffairsApproved"
           noticePropertyName="officersAffairsNotice"
@@ -121,26 +132,23 @@ function VacationApprovalOverlayContent(props: IProps) {
           enabled={true}
           title="موافقة نائب المدير"
           // allowedUserType={userTypes.viceManager || userTypes.admin}
-          allowedUserType={userTypes.officersAffairs}
+          allowedUserTypes={[userTypes.viceManager, userTypes.officersAffairs]}
           updateLink="api/vacation/update"
           approvalPropertyName="viceManagerApproved"
           noticePropertyName="viceManagerNotice"
           storedData={storedVacationData}
         />
         <hr />
-        {storedVacationData.officerType !== userTypes.normalOfficer && (
-          <ApprovalBlock
-            id={props.vacationId}
-            enabled={true}
-            // allowedUserType={userTypes.manager}
-            allowedUserType={userTypes.officersAffairs}
-            title="موافقة المدير"
-            updateLink="api/vacation/update"
-            approvalPropertyName="managerApproved"
-            noticePropertyName="managerNotice"
-            storedData={storedVacationData}
-          />
-        )}
+        <ApprovalBlock
+          id={props.vacationId}
+          enabled={true}
+          allowedUserTypes={[userTypes.manager, userTypes.officersAffairs]}
+          title="موافقة المدير"
+          updateLink="api/vacation/update"
+          approvalPropertyName="managerApproved"
+          noticePropertyName="managerNotice"
+          storedData={storedVacationData}
+        />
       </div>
     </>
   );

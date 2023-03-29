@@ -21,7 +21,6 @@ export const userSlice = createSlice({
   reducers: {
     setAuthData: (state: userState, action) => {
       const data = action.payload;
-      console.log({ data });
       state.officerName = data.officerName;
       state.officerRank = data.officerRank;
       state.officerId = data.officerId;

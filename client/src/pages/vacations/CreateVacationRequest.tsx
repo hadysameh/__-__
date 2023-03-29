@@ -16,18 +16,67 @@ import {
 } from "../../types";
 import storeVacation from "../../features/vacations/serverApis/store";
 import socket from "../../services/socket-io";
+import calculateDiffreneceBetweenDates from "../../_helpers/calculateDiffreneceBetweenDates";
+import getVacations from "../../features/vacations/serverApis/get";
+import getTodaysDate from "../../_helpers/getTodaysDate";
 
 function CreateVacationRequest() {
   const navigate = useNavigate();
   const userType = useSelector(selectUserType);
 
   const loggedOfficerId = useSelector(selectOfficerId);
+  const [
+    isOfficerAlreadyHasPendingVacationRequestsToday,
+    setIsOfficerAlreadyHasPendingVacationRequestsToday,
+  ] = useState<boolean>(true);
   const [selectedVacationType, setSelectedVacationType] = useState<any>();
   const [selectedInsteadOfDay, setSelectedInsteadOfDay] = useState<any>();
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
+  const [
+    remainingErguntVacationsNumber,
+    setRemainingErguntVacationsNumber,
+  ] = useState(0);
+  const [
+    remainingYearlyVacationsDaysNumber,
+    setOfficerRemainingYearlyVacationsDaysNumber,
+  ] = useState(0);
+
   const unavailableDataElement = (
     <span className="text-danger"> غير متوفر</span>
+  );
+  //the idea of using this query is if the officer has vacation request that wasn't approved or denied he can't apply for another request
+  //becasue 2 parallel requests can be accpeted and that will damage the vacationCredit in database
+  const findOfficerPendingVacationsQuery = {
+    $and: [
+      { branchChiefApproved: { $ne: false } },
+      { officersAffairsApproved: { $ne: false } },
+      { viceManagerApproved: { $ne: false } },
+      { managerApproved: { $nin: [true, false] } },
+    ],
+    from: { $gte: getTodaysDate() },
+    officer: loggedOfficerId,
+  };
+  const {
+    data: myPendingVacations,
+    isLoading: isVacationsLoading,
+    refetch: refetchPendingVacations,
+    isSuccess: isFetchingOfficerPendingVacationDataSucceeded,
+  } = useQuery(
+    ["fetchPendingVacations"],
+    () => getVacations(findOfficerPendingVacationsQuery, 1, 20),
+    {
+      // staleTime: Infinity,
+      // cacheTime: 0,
+      onSuccess(data) {
+        console.log({ data });
+        if (data.length) {
+          setIsOfficerAlreadyHasPendingVacationRequestsToday(true);
+        } else {
+          setIsOfficerAlreadyHasPendingVacationRequestsToday(false);
+        }
+      },
+    }
   );
   const {
     data: vacationOptions,
@@ -36,10 +85,11 @@ function CreateVacationRequest() {
   } = useQuery("getCreateVacationOptions", getCreateVacationsOptions, {
     staleTime: Infinity,
     cacheTime: 0,
+    enabled: isFetchingOfficerPendingVacationDataSucceeded,
   });
 
   const {
-    data: vacationsCredit,
+    data: officerVacationsCredit,
     isLoading: isVacationsCreditLoading,
     error: vacationsCreditError,
     refetch: refetchVacationsCredit,
@@ -49,9 +99,19 @@ function CreateVacationRequest() {
     {
       staleTime: Infinity,
       cacheTime: 0,
+      enabled: isFetchingOfficerPendingVacationDataSucceeded,
+      onSuccess(data) {
+        if (data.length) {
+          setRemainingErguntVacationsNumber(
+            Number(data[0].remainingErguntVacationsNumber)
+          );
+          setOfficerRemainingYearlyVacationsDaysNumber(
+            data[0].remainingYearlyVacationsDaysNumber
+          );
+        }
+      },
     }
   );
-
   useEffect(() => {
     socket.on("refetch-vacations-data", refetchVacationsCredit);
     return () => {
@@ -82,7 +142,7 @@ function CreateVacationRequest() {
             <u>إنشاء طلب أجازة </u>
           </div>
           <div>
-            {vacationsCredit ? (
+            {officerVacationsCredit ? (
               isVacationsCreditLoading ? (
                 <HorizontalSpinner></HorizontalSpinner>
               ) : (
@@ -93,30 +153,17 @@ function CreateVacationRequest() {
                     </div>
                     <div>
                       الرصيد المتبقي من العارضة:{" "}
-                      {vacationsCredit[0]?.remainingErguntVacationsNumber ||
-                        vacationsCredit[0]?.erguntVacationsNumber ||
-                        unavailableDataElement}
+                      {remainingErguntVacationsNumber}
                     </div>
                     <div>
-                      الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-                      {vacationsCredit[0]
-                        ?.remainingFirstHalfyearlyVacationsDaysNumber ||
-                        vacationsCredit[0]
-                          ?.firstHalfyearlyVacationsDaysNumber ||
-                        unavailableDataElement}
+                      المتبقي من الاجازات السنوية :{" "}
+                      {remainingYearlyVacationsDaysNumber}
                     </div>
-                    <div>
-                      الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-                      {vacationsCredit[0]
-                        ?.remainingSecondHalfyearlyVacationsDaysNumber ||
-                        vacationsCredit[0]
-                          ?.secondHalfyearlyVacationsDaysNumber ||
-                        unavailableDataElement}
-                    </div>
+
                     <div>
                       ايام تستحق بدل راحة:{" "}
-                      {vacationsCredit[0]?.daysToHaveVactionsInsteadOf.length ||
-                        unavailableDataElement}
+                      {officerVacationsCredit[0]?.daysToHaveVactionsInsteadOf
+                        .length || unavailableDataElement}
                     </div>
                   </div>
                 </>
@@ -126,7 +173,7 @@ function CreateVacationRequest() {
             )}
           </div>
           <br />
-          {vacationsCredit && vacationsCredit.length ? (
+          {officerVacationsCredit && officerVacationsCredit.length ? (
             <form
               action=""
               onSubmit={(e) => {
@@ -165,7 +212,7 @@ function CreateVacationRequest() {
                           onChange={(vacationType: any) => {
                             setSelectedInsteadOfDay(vacationType);
                           }}
-                          options={vacationsCredit[0].daysToHaveVactionsInsteadOf.map(
+                          options={officerVacationsCredit[0].daysToHaveVactionsInsteadOf.map(
                             (dayToHaveVactionInsteadOf: any) => {
                               return {
                                 label: dayToHaveVactionInsteadOf.date,
@@ -196,6 +243,7 @@ function CreateVacationRequest() {
                   <div className="col-5">
                     <label className="form-label">تاريخ نهاية الأجازة</label>
                     <input
+                      min={from}
                       type="date"
                       className="form-control fs-4"
                       onChange={(e) => {
@@ -210,7 +258,15 @@ function CreateVacationRequest() {
                 <button
                   className="btn btn-primary fs-2"
                   onClick={() => {
-                    if (
+                    const diffrenceBetweenFromAndToDates = calculateDiffreneceBetweenDates(
+                      to,
+                      from
+                    );
+                    if (isOfficerAlreadyHasPendingVacationRequestsToday) {
+                      alert(
+                        `عفوا لديك بالفعل طلب اجازة جاري الرجاء انتظار الموافقة او الرفض قبل تقديم طلب اخر`
+                      );
+                    } else if (
                       selectedVacationType &&
                       selectedVacationType.label ===
                         vacationsTypesEnumInArabic.insteadOfVacation &&
@@ -218,7 +274,36 @@ function CreateVacationRequest() {
                     ) {
                       alert("الرجاء اختيار يوم بدل الراحة");
                     } else if (!(selectedVacationType?.value && to && from)) {
-                      alert("الرجاء التحقق من البيانات المدخلة");
+                      alert(
+                        "الرجاء اكمال البيانات المطلوبة او التحقق من البيانات المدخلة"
+                      );
+                    } else if (
+                      selectedVacationType.label ===
+                        vacationsTypesEnumInArabic.ergunt &&
+                      Number(
+                        officerVacationsCredit[0].remainingErguntVacationsNumber
+                      ) === 0
+                    ) {
+                      alert("لا يوجد لك رصيد متبقي من العارضة");
+                    } else if (
+                      selectedVacationType.label ===
+                        vacationsTypesEnumInArabic.ergunt &&
+                      diffrenceBetweenFromAndToDates > 0
+                    ) {
+                      alert("طلب الاجازة العارضة لا يمكن ان يكون اكثر من يوم");
+                    } else if (diffrenceBetweenFromAndToDates < 0) {
+                      alert(
+                        "تاريخ النهاية يجب إن يكون بعد او يساوى تاريخ البداية"
+                      );
+                    } else if (
+                      selectedVacationType.label ===
+                        vacationsTypesEnumInArabic.yearly &&
+                      Number(
+                        officerVacationsCredit[0]
+                          .remainingYearlyVacationsDaysNumber
+                      ) < diffrenceBetweenFromAndToDates
+                    ) {
+                      alert("لا يوجد لك رصيد متبقي من الاجازات السنوية");
                     } else {
                       const objToStore: any = {
                         type: selectedVacationType.value,
@@ -235,6 +320,7 @@ function CreateVacationRequest() {
                       } else if (userType === userTypesEnum.viceManager) {
                         objToStore["viceManagerApproved"] = true;
                       }
+
                       mutation.mutate(objToStore);
                     }
                   }}

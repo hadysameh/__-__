@@ -40,8 +40,8 @@ function ApprovalBlock(props: IProps) {
     if (approved != null) {
       return approved === true;
     }
-    if (props.storedData.vacation[props.approvalPropertyName]) {
-      return props.storedData.vacation[props.approvalPropertyName] === true;
+    if (props.storedData[props.approvalPropertyName]) {
+      return props.storedData[props.approvalPropertyName] === true;
     }
 
     return undefined;
@@ -51,8 +51,8 @@ function ApprovalBlock(props: IProps) {
     if (approved != null) {
       return approved === false;
     }
-    if (props.storedData.vacation[props.approvalPropertyName]) {
-      return props.storedData.vacation[props.approvalPropertyName] === false;
+    if (props.storedData[props.approvalPropertyName]) {
+      return props.storedData[props.approvalPropertyName] === false;
     }
 
     return undefined;
@@ -117,9 +117,7 @@ function ApprovalBlock(props: IProps) {
                 !props.enabled || !props.allowedUserTypes.includes(userType)
               }
               onChange={(e) => setNotice(e.target.value)}
-              defaultValue={
-                props.storedData.vacation[`${props.allowedUserTypes}Notice`]
-              }
+              defaultValue={props.storedData[`${props.allowedUserTypes}Notice`]}
             ></textarea>
           </div>
         </div>

@@ -25,21 +25,16 @@ class UpdateVacationRepo {
       { ...VacationParams }
     );
 
-    const updatedVacation = await Vacation.findOne({ _id }).populate<
-      IVacationTypeModel
-    >("type");
-
-    const officerType = await getOfficerType(String(updatedVacation?.officer));
+    const updatedVacation = await Vacation.findOne({
+      _id,
+    }).populate<IVacationTypeModel>("type");
 
     const officerVacationsCredit = await VacationsCredit.findOne({
       officer: updatedVacation!.officer,
       year: getCurrentYear(),
     });
 
-    const isVacationApproved = this.isVacationApproved(
-      updatedVacation!,
-      officerType
-    );
+    const isVacationApproved = this.isVacationApproved(updatedVacation!);
     if (isVacationApproved) {
       await this.modifyVacationsCredit(
         updatedVacation!,
@@ -49,15 +44,8 @@ class UpdateVacationRepo {
     return vacationUpdate;
   }
 
-  static isVacationApproved(
-    vacationRecord: IVacationModel,
-    officerUserType: userTypesEnum
-  ) {
-    if (officerUserType === userTypesEnum.normalOfficer) {
-      return vacationRecord.viceManagerApproved;
-    } else {
-      return vacationRecord.managerApproved;
-    }
+  static isVacationApproved(vacationRecord: IVacationModel) {
+    return vacationRecord.managerApproved;
   }
 
   static async modifyVacationsCredit(
@@ -68,7 +56,7 @@ class UpdateVacationRepo {
       case vacationsTypesEnumInArabic.ergunt:
         await this.decreaseRemainingEreguntVacation(
           vacationsCredit,
-          daysBetweenTwoDates(vacation.from, vacation.to)
+          daysBetweenTwoDates(vacation.from, vacation.to) + 1
         );
         break;
       case vacationsTypesEnumInArabic.yearly:
@@ -115,70 +103,32 @@ class UpdateVacationRepo {
     vacation: IVacationModel,
     vacationsCredit: IVacationsCreditModel
   ) {
-    const vacationsTypes = await VacationType.find({});
+    const numberOfRequestedYearlyVacationsDays =
+      daysBetweenTwoDates(vacation.from, vacation.to) + 1;
 
-    const isFirstYearlyVacation = this.isFirstHalfyearlyVacation(
-      vacation,
-      vacationsTypes
+    const remainingDaysAfterAfterDecreasingDays =
+      vacationsCredit.remainingYearlyVacationsDaysNumber -
+      numberOfRequestedYearlyVacationsDays;
+    console.log({ remainingDaysAfterAfterDecreasingDays });
+
+    await VacationsCredit.updateOne(
+      { _id: vacationsCredit.id },
+      {
+        remainingYearlyVacationsDaysNumber: remainingDaysAfterAfterDecreasingDays,
+      }
     );
-    const isSecondYearlyVacation = this.isSecondHalfyearlyVacation(
-      vacation,
-      vacationsTypes
-    );
-    const numberOfYearlyVacationsDays = daysBetweenTwoDates(
-      vacation.from,
-      vacation.to
-    );
-
-    if (isFirstYearlyVacation) {
-      await this.decreaseRemainingFirstHalfyearlyVacation(
-        vacationsCredit,
-        numberOfYearlyVacationsDays
-      );
-    } else if (isSecondYearlyVacation) {
-      await this.decreaseRemainingFirstHalfyearlyVacation(
-        vacationsCredit,
-        numberOfYearlyVacationsDays
-      );
-    }
-  }
-
-  static isFirstHalfyearlyVacation(
-    vacationParams: IVacationModel,
-    vacationsTypes: IVacationTypeModel[]
-  ) {
-    return !this.isSecondHalfyearlyVacation(vacationParams, vacationsTypes);
-  }
-
-  static isSecondHalfyearlyVacation(
-    vacationParams: IVacationModel,
-    vacationsTypes: IVacationTypeModel[]
-  ) {
-    const yearlyTypeName = vacationsTypesEnumInArabic.yearly;
-    const isYearlyVacation = this.isVacationOfCertainTypeInArabic(
-      vacationParams,
-      vacationsTypes,
-      yearlyTypeName
-    );
-    const currentYear = getCurrentYear();
-    const isToInSecondtHalfYear = vacationParams.to > `${currentYear}-06-1`;
-
-    return isYearlyVacation && isToInSecondtHalfYear;
   }
 
   static async decreaseRemainingEreguntVacation(
     vacationsCredit: IVacationsCreditModel,
     amountOfDays: number
   ) {
-    amountOfDays = amountOfDays == 0 ? 1 : amountOfDays;
     const remianingEreguntVacations =
-      vacationsCredit.remainingErguntVacationsNumber !== null
-        ? vacationsCredit.remainingErguntVacationsNumber
-        : vacationsCredit.erguntVacationsNumber;
+      vacationsCredit.remainingErguntVacationsNumber;
 
     let remainingDaysAfterAfterDecreasingDays =
       remianingEreguntVacations - amountOfDays;
-
+    console.log({ remianingEreguntVacations });
     await VacationsCredit.updateOne(
       { _id: vacationsCredit.id },
       {
@@ -196,46 +146,6 @@ class UpdateVacationRepo {
       vacationParams,
       vacationsTypes,
       erguntTypeName
-    );
-  }
-
-  static async decreaseRemainingFirstHalfyearlyVacation(
-    vacationsCredit: IVacationsCreditModel,
-    amountOfDays: number
-  ) {
-    const remianingFirstHalfYearlyVacations =
-      vacationsCredit.remainingFirstHalfyearlyVacationsDaysNumber !== null
-        ? vacationsCredit.remainingFirstHalfyearlyVacationsDaysNumber
-        : vacationsCredit.firstHalfyearlyVacationsDaysNumber;
-
-    const remainingDaysAfterAfterDecreasingDays =
-      remianingFirstHalfYearlyVacations - amountOfDays;
-
-    await VacationsCredit.updateOne(
-      { _id: vacationsCredit.id },
-      {
-        remainingFirstHalfyearlyVacationsDaysNumber: remainingDaysAfterAfterDecreasingDays,
-      }
-    );
-  }
-
-  static async decreaseRemainingSecondHalfyearlyVacation(
-    vacationsCredit: IVacationsCreditModel,
-    amountOfDays: number
-  ) {
-    const remianingSecondHalfYearlyVacations =
-      vacationsCredit.remainingSecondHalfyearlyVacationsDaysNumber !== null
-        ? vacationsCredit.remainingSecondHalfyearlyVacationsDaysNumber
-        : vacationsCredit.secondHalfyearlyVacationsDaysNumber;
-
-    const remainingDaysAfterAfterDecreasingDays =
-      remianingSecondHalfYearlyVacations - amountOfDays;
-
-    await VacationsCredit.updateOne(
-      { _id: vacationsCredit.id },
-      {
-        remainingSecondHalfyearlyVacationsDaysNumber: remainingDaysAfterAfterDecreasingDays,
-      }
     );
   }
 

@@ -102,7 +102,7 @@ function ShowShifts() {
     </head>
     <body>
         <h2>
-            النوبتاجيات
+            النوبتجيات
         </h2>
         <div style="display:flex;flex-direction:column;align-self:center;width:95vw">
     ${divToPrint.innerHTML}
@@ -129,7 +129,7 @@ function ShowShifts() {
         <br />
         <Select
           onChange={(monthNameOption: any) => {
-            console.log({ monthNameOption });
+            // console.log({ monthNameOption });
             setMonthNumber(() => monthNameOption.value);
           }}
           styles={{
@@ -157,7 +157,7 @@ function ShowShifts() {
       </div>
       <br />
       <div className="fs-3">
-        طباعة النوبتاجيات
+        طباعة النوبتجيات
         <button
           className="btn btn-lg btn-success"
           onClick={() => {

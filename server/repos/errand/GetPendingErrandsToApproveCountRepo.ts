@@ -10,7 +10,10 @@ class GetPendingErrandsToApproveCountRepo {
     const userBranch = user.officer.branch;
 
     let queryParams: any = {};
-    if (userType == userTypesEnum.viceManager) {
+    if (userType == userTypesEnum.manager) {
+      queryParams["managerApproved"] = null;
+      queryParams["officersAffairsApproved"] = true;
+    } else if (userType == userTypesEnum.viceManager) {
       queryParams["viceManagerApproved"] = null;
       queryParams["officersAffairsApproved"] = true;
     } else if (userType == userTypesEnum.officersAffairs) {
@@ -29,7 +32,7 @@ class GetPendingErrandsToApproveCountRepo {
       queryParams["officersAffairsApproved"] = null;
       queryParams["branchChiefApproved"] = null;
     }
-    queryParams = { ...queryParams, queryParams: { $gte: getTodaysDate() } };
+    queryParams = { ...queryParams, fromDate: { $gte: getTodaysDate() } };
     let errandsToBeApprovedCount = await Errand.count(queryParams);
 
     return errandsToBeApprovedCount;

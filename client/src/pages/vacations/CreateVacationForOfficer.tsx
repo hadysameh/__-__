@@ -16,7 +16,7 @@ import {
 } from "../../types";
 import storeVacation from "../../features/vacations/serverApis/store";
 import socket from "../../services/socket-io";
-import get from "../../features/officers/serverServices/get";
+import getOfficers from "../../features/officers/serverServices/get";
 
 function CreateVacationForOfficer() {
   const userType = useSelector(selectUserType);
@@ -32,7 +32,7 @@ function CreateVacationForOfficer() {
     data: officersData,
     isLoading: isOfficersDataLoading,
     error: fetchingOfficersError,
-  } = useQuery("fetchOfficers", get, {
+  } = useQuery("fetchOfficers", getOfficers, {
     staleTime: Infinity,
     cacheTime: 0,
   });
@@ -62,6 +62,9 @@ function CreateVacationForOfficer() {
       staleTime: Infinity,
       cacheTime: 0,
       enabled: !!selectedOfficer?.value,
+      onSuccess: (data) => {
+        console.log(data);
+      },
     }
   );
 
@@ -73,7 +76,6 @@ function CreateVacationForOfficer() {
   });
   const mutation = useMutation(storeVacation, {
     onSuccess: (data, variables, context) => {
-      console.log({ data, variables, context });
       navigate("/vacations/pendingvacationstoapprove");
     },
     onError: () => {
@@ -127,15 +129,21 @@ function CreateVacationForOfficer() {
                     </div>
                     <div>
                       الرصيد المتبقي من العارضة:{" "}
-                      {vacationsCredit[0]?.erguntVacationsNumber}
+                      {vacationsCredit[0]?.remainingErguntVacationsNumber}
                     </div>
                     <div>
                       الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-                      {vacationsCredit[0]?.firstHalfyearlyVacationsDaysNumber}
+                      {
+                        vacationsCredit[0]
+                          ?.remainingFirstHalfyearlyVacationsDaysNumber
+                      }
                     </div>
                     <div>
-                      الرصيد المتبقي من الاجازات السنوية في النصف الأول:{" "}
-                      {vacationsCredit[0]?.secondHalfyearlyVacationsDaysNumber}
+                      الرصيد المتبقي من الاجازات السنوية في النصف الثاني:{" "}
+                      {
+                        vacationsCredit[0]
+                          ?.remainingSecondHalfyearlyVacationsDaysNumber
+                      }
                     </div>
                     <div>
                       ايام تستحق بدل راحة:{" "}
@@ -261,7 +269,6 @@ function CreateVacationForOfficer() {
 
                         ...userTypeApproved,
                       };
-                      console.log({ objToStore });
                       mutation.mutate(objToStore);
                     }
                   }}
